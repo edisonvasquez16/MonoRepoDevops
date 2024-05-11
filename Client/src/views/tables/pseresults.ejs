@@ -1,0 +1,46 @@
+<html lang="en">
+<body>
+<div class="details content">
+    <table id="tablax" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr class="item"> 
+                <td>
+                    <h5 class="title">ID</h5>            
+                </td>
+                <td>
+                    <h5 class="snippet">Email</h5>            
+                </td>
+                <td>
+                    <h5 class="snippet">PSE Ref.</h5>    
+                </td>
+                <td>
+                    <h5 class="snippet">Options</h5>
+                </td>                            
+            </tr> 
+        </thead>
+    <% if (psePayments.results.length > 0) { %>
+        <% psePayments.results.forEach(psePayment => { %>
+                    <tr class="item"> 
+                        <td>
+                            <h6 class="title"><%= psePayment._id %></h6>            
+                        </td>
+                        <td>
+                            <p class="snippet"><%= psePayment.pseuserEmail %></p>            
+                        </td>
+                        <td>
+                            <p class="snippet"><%= psePayment.psereferencePse %></p>    
+                        </td>
+                        <td>
+                            <form action="/details/psedetail/<%= psePayment._id %>">
+                                <input class="button" type="submit" value="Print" />
+                            </form>
+                        </td>                            
+                    </tr>                              
+        <% }) %>
+      <% } else { %>
+        <p>There are no cash payments to display...</p>
+      <% } %>
+    </table>
+</div>
+</body>
+</html>

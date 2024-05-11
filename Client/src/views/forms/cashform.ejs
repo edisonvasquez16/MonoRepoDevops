@@ -1,0 +1,76 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+    <body>
+        <%- include("../partials/navigation.ejs") %>
+            <div>
+                <h3>Pay with cash</h3>
+                <p>
+                    Form where we will be able to make the payment of the invoice by means of cash
+                </p>
+                <br />
+                <form action="/cashform/create" method="post">
+                    <table width="100%" id="alignment">
+                        <tr>
+                            <td>
+                                <label class="required" for="cashreference"><b>Pay reference:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="10" required type="text" id="cashreference" name="cashreference"
+                                    placeholder="Pay reference" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="cashuserEmail"><b>User email:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="50" required type="email" id="cashuserEmail"
+                                    name="cashuserEmail" placeholder="usuario.pago@gmail.com" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="cashcollectorCash"><b>Collector cash:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="20" required type="text" id="cashcollectorCash"
+                                    name="cashcollectorCash" placeholder="Collector cash" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="cashamount"><b>Amount:</b> </label>
+                            </td>
+                            <td>
+                                <input required type="text" id="cashamount" name="cashamount" placeholder="$15.000"
+                                    onkeydown="if(this.value.length==7) return false;" onkeypress="validateNumberText(event)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="cashcellphone"><b>Cellphone:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="10" maxlength="15" onkeypress="validateNumberText(event)" required
+                                    type="text" id="cashcellphone" name="cashcellphone" placeholder="Cellphone" />
+                            </td>
+                        </tr>
+                    </table>
+                    </br>
+                    <div align="center">
+                        <button class="button" type="submit" name="saveCashPayment" id="saveCashPayment"> Save </button>
+                    </div>
+
+                </form>
+            </div>
+            <button class="accordion">Cash payments saved</button>
+            <div class="panel">
+                <br />
+                <%- include("../tables/cashresults.ejs") %>
+            </div>
+            <%- include("../partials/footer.ejs") %>
+
+    </body>
+
+</html>

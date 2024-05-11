@@ -1,0 +1,29 @@
+###
+POST http://localhost:1337/api/v1/cash-payment HTTP/1.1
+Content-Type: application/json
+
+{
+  "cashreference": "CASH000001",
+  "cashuserEmail": "USER1234@test.com",
+  "cashcollectorCash": "Efecty",
+  "cashamount": 15000,
+  "cashcellphone": "573225568899"
+}
+
+###
+GET http://localhost:1337/api/v1/cash-payments HTTP/1.1
+
+###
+GET http://localhost:1337/api/v1/cash-payment/650f35da8b6e7f310814f296 HTTP/1.1
+
+###
+PUT http://localhost:1337/api/v1/cash-payment/650f35da8b6e7f310814f296 HTTP/1.1
+Content-Type: application/json
+
+{
+  "cashuserEmail": "USER1234@test.com",
+  "cashcellphone": "(+57) 3225568899"
+}
+
+###
+DELETE http://localhost:1337/api/v1/cash-payment/650f35da8b6e7f310814f296 HTTP/1.1

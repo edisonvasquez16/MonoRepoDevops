@@ -1,0 +1,91 @@
+<br /><br /><br />
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+  <body>
+    <div class="details-content">
+      <div align="center">
+        <br />
+        <h4>ID pay from PSE: </h4>
+        <p>
+          <%= psePayment._id %>
+        </p>
+      </div>
+      <div class="content">
+
+        <table width="80%" id="alignment">
+          <tr>
+            <td>
+              <label><b>Username: </b></label>
+              <input id="pseDetailFullNameUser" type="text" value="<%= psePayment.psefullNameUser %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Pay reference: </b></label>
+              <input id="pseDetailPayReference" type="text" value="<%= psePayment.psereference %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Pay reference PSE: </b></label>
+              <input id="pseDetailPayReferencePse" type="text" value="<%= psePayment.psereferencePse %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>User email: </b></label>
+              <input id="pseDetailUserEmail" type="text" value="<%= psePayment.pseuserEmail %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Amount pay: </b></label>
+              <input id="pseDetailAmount" type="text" value="$ <%= psePayment.pseamount %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Cellphone: </b></label>
+              <input id="pseDetailCellphone" type="text" value="<%= psePayment.psecellphone %>" disabled>
+            </td>
+          </tr>
+          <!-- <tr> 
+          <td>
+             <a class="delete" data-doc="<%= psePayment._id %>">delete</a>
+          </td>
+        </tr> -->
+        </table>
+      </div>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div align="center">
+      <button class="button" type="button" onclick="window.print();return false;" class="print"> VOUCHER </button>
+      <br />
+      <br />
+      <a type="button" href="/pseform" class="button"> BACK </a>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <!-- <script>
+        const trashcan = document.querySelector('a.delete');
+
+        trashcan.addEventListener('click', (e) => {
+          const endpoint = `/api/v1/pse-payment/${trashcan.dataset.doc}`;
+
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+            .then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        });
+
+      </script> -->
+
+  </body>
+
+</html>

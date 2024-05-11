@@ -1,0 +1,36 @@
+###
+POST http://localhost:1337/api/v1/credit-card-payment HTTP/1.1
+Content-Type: application/json
+
+{
+  "ccreference": "CC00000001",
+  "ccName": "USER CREDIT CARD 1133",
+  "ccNumber": "4111 5555 8888 6666",
+  "cclevel": "VISA",
+  "ccMonthExp": 8,
+  "ccYearExp": 25,
+  "ccDues": 12,
+  "ccSecurityCode": 123,
+  "ccDate": "23/09/2024",
+  "ccuserEmail": "USER1133@test.com",
+  "ccamount": 12500,
+  "cccellphone": "(+57) 3256589987"
+}
+
+###
+GET http://localhost:1337/api/v1/credit-card-payments HTTP/1.1
+
+###
+GET http://localhost:1337/api/v1/credit-card-payment/650f43263f32878c2f9ca20d HTTP/1.1
+
+###
+PUT http://localhost:1337/api/v1/credit-card-payment/650f43263f32878c2f9ca20d HTTP/1.1
+Content-Type: application/json
+
+{
+  "ccuserEmail": "USER1133@test.com",
+  "cellphone": "(+57) 3256589987"
+}
+
+###
+DELETE http://localhost:1337/api/v1/credit-card-payment/650f445a624015933747aaca HTTP/1.1

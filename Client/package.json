@@ -1,0 +1,96 @@
+{
+  "name": "testprojectmongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "pro": "node src/app.js",
+    "dev": "nodemon src/app-dev.js",
+    "qa": "nodemon src/app-qa.js",
+    "aut": "nodemon src/app-aut.js",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
+    "test-mocha": "mocha ./src/tests/mocha/*.spec.js --reporter spec",
+    "jest": "jest",
+    "cypress": "cypress open",
+    "report:merge": "mochawesome-merge cypress/results/*.json > index.json",
+    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
+    "cypress:test": "cypress run --spec cypress/e2e/*.cy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edisonvasquez16/TestProjectMongo.git"
+  },
+  "keywords": [
+    "testing",
+    "expressjs",
+    "nodejs",
+    "mongodb",
+    "mongoose",
+    "jest",
+    "supertest"
+  ],
+  "author": "Edison Vasquez Burbano",
+  "homepage": "https://github.com/itsrakeshhq/jest-tests-demo.git#readme",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "chai": "^4.3.8",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.5.2",
+    "morgan": "^1.10.0",
+    "request": "^2.88.2",
+    "supertest": "^6.3.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "unit.js": "^2.1.1"
+  },
+  "devDependencies": {
+    "@cypress/mocha-teamcity-reporter": "^1.0.0",
+    "@cypress/xpath": "^2.0.3",
+    "@types/node": "^20.7.1",
+    "cross-env": "^7.0.3",
+    "cypress": "^13.3.0",
+    "cypress-grep": "^2.5.3",
+    "cypress-mochawesome-reporter": "^2.4.0",
+    "cypress-multi-reporters": "^1.6.3",
+    "cypress-xpath": "^2.0.1",
+    "jest": "^29.7.0",
+    "jest-html-reporter": "^3.10.2",
+    "nodemon": "^3.0.1",
+    "ts-jest": "^29.1.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "cypress/globals": true
+    },
+    "plugins": [
+      "cypress"
+    ]
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ],
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "reporters": [
+      "default",
+      [
+        "./node_modules/jest-html-reporter",
+        {
+          "pageTitle": "Unit test Report"
+        }
+      ]
+    ]
+  }
+}

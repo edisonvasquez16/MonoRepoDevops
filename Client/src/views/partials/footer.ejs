@@ -1,0 +1,98 @@
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+</script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+</script>
+<script>
+    $(document).ready(function () {
+            $('#tablax').DataTable({
+                order: [[0, 'desc']],
+                language: {
+                    search: "Buscar item:",
+                    lengthMenu: "Agrupar de _MENU_ items",
+                    info: "Items desde el _START_ al _END_ de un total de _TOTAL_",
+                    infoEmpty: "No existen datos.",
+                    infoFiltered: "(Filtrado de _MAX_ elementos en total)",
+                    zeroRecords: "No se encontraron datos con tu busqueda",
+                    paginate: {
+                        previous: "Anterior",
+                        next: "Siguiente"
+                    }
+                },
+                scrollY: 430,
+                lengthMenu: [ [10, 25, -1], [10, 25, "All"] ],
+            });
+        });
+        var acc = document.getElementsByClassName("accordion");
+                    var i;
+
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].addEventListener("click", function () {
+                            this.classList.toggle("active");
+                            var panel = this.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                panel.style.maxHeight = null;
+                            } else {
+                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            }
+                        });
+                    }
+        function validateNumberText(evt) {
+            var theEvent = evt || window.event;
+
+            if(key == 37 || key == 38 || key == 39 || key == 40 || key == 8 || key == 46) { // Left / Up / Right / Down Arrow, Backspace, Delete keys
+                return;
+            }
+            if (theEvent.type === 'paste') {
+                key = event.clipboardData.getData('text/plain');
+            } else {
+            var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+            }
+            var regex = /[0-9]|\./;
+            if( !regex.test(key) ) {
+                theEvent.returnValue = false;
+                if(theEvent.preventDefault) theEvent.preventDefault();
+            }
+        }
+
+
+        $("input[data-type='currency']").on({
+            keyup: function() {
+              formatCurrency($(this));
+            },
+            blur: function() { 
+              formatCurrency($(this), "blur");
+            }
+        });
+
+
+        function formatNumber(n) {
+          return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+
+
+        function formatCurrency(input, blur) {
+          var input_val = input.val();
+          if (input_val === "") { return; }
+          var original_len = input_val.length;
+          var caret_pos = input.prop("selectionStart");
+          if (input_val.indexOf(".") >= 0) {
+            var decimal_pos = input_val.indexOf(".");
+            var left_side = input_val.substring(0, decimal_pos);
+            left_side = formatNumber(left_side);
+            input_val = "$" + left_side;
+          } else {
+            input_val = formatNumber(input_val);
+            input_val = "$" + input_val;
+          }
+          
+          input.val(input_val);
+
+          var updated_len = input_val.length;
+          caret_pos = updated_len - original_len + caret_pos;
+          input[0].setSelectionRange(caret_pos, caret_pos);
+        }
+</script>
+<footer>
+    Copyright &copy; Edison Vasquez 2023
+</footer>

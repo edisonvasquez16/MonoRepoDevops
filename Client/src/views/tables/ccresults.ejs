@@ -1,0 +1,46 @@
+<html lang="en">
+<body>
+<div class="details content">
+    <table id="tablax" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr class="item"> 
+                <td>
+                    <h5 class="title">ID</h5>            
+                </td>
+                <td>
+                    <h5 class="snippet">Email</h5>            
+                </td>
+                <td>
+                    <h5 class="snippet">Cellphone</h5>    
+                </td>
+                <td>
+                    <h5 class="snippet">Options</h5>
+                </td>                            
+            </tr>
+        </thead>
+    <% if (ccPayments.results.length > 0) { %>
+        <% ccPayments.results.forEach(ccPayment => { %>
+                    <tr class="item"> 
+                        <td>
+                            <h6 class="title"><%= ccPayment._id %></h6>            
+                        </td>
+                        <td>
+                            <p class="snippet"><%= ccPayment.ccuserEmail %></p>            
+                        </td>
+                        <td>
+                            <p class="snippet"><%= ccPayment.cccellphone %></p>    
+                        </td>
+                        <td>
+                            <form action="/details/ccdetail/<%= ccPayment._id %>">
+                                <input class="button" type="submit" value="Print" />
+                            </form>
+                        </td>                            
+                    </tr>                              
+        <% }) %>
+      <% } else { %>
+        <p>There are no cash payments to display...</p>
+      <% } %>
+    </table>
+</div>
+</body>
+</html>

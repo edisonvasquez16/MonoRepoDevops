@@ -1,0 +1,30 @@
+###
+POST http://localhost:1337/api/v1/pse-payment HTTP/1.1
+Content-Type: application/json
+
+{
+  "psereference": "PSEO0000001",
+  "psereferencePse": "PSER00000001",
+  "pseuserEmail": "USER4321@test.com",
+  "psefullNameUser": "USUARIO PSE PAYMENT 4321",
+  "pseamount": 15000,
+  "psecellphone": "(+57) 3225568899"
+}
+
+###
+GET http://localhost:1337/api/v1/pse-payments HTTP/1.1
+
+###
+GET http://localhost:1337/api/v1/pse-payment/650f468404a363effbf4b986 HTTP/1.1
+
+###
+PUT http://localhost:1337/api/v1/pse-payment/650f468404a363effbf4b986 HTTP/1.1
+Content-Type: application/json
+
+{
+  "pseuserEmail": "USER4321@test.com",
+  "psecellphone": "(+57) 3225568899"
+}
+
+###
+DELETE http://localhost:1337/api/v1/pse-payment/650f468404a363effbf4b986 HTTP/1.1

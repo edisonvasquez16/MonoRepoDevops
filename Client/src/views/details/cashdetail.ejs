@@ -1,0 +1,85 @@
+<br /><br /><br />
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+  <body>
+    <div class="details-content">
+      <div align="center">
+        <br />
+        <h4>ID pay from CASH: </h4>
+        <p>
+          <%= cashPayment._id %>
+        </p>
+      </div>
+      <div class="content">
+
+        <table width="85%">
+          <tr>
+            <td>
+              <label><b> Pay reference: </b></label>
+              <input id="cashDetailPayReference" type="text" value="<%= cashPayment.cashreference %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>User email: </b></label>
+              <input id="cashDetailUserEmail" type="text" value="<%= cashPayment.cashuserEmail %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Collector cash: </b></label>
+              <input id="cashDetailCollectorCash" type="text" value="<%= cashPayment.cashcollectorCash %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Amount pay: </b></label>
+              <input id="cashDetailAmount" type="text" value="$ <%= cashPayment.cashamount %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Cellphone: </b></label>
+              <input id="cashDetailCellphone" type="text" value="<%= cashPayment.cashcellphone %>" disabled>
+            </td>
+          </tr>
+          <!-- <tr> 
+          <td>
+             <a class="delete" data-doc="<%= cashPayment._id %>">delete</a> 
+          </td>
+        </tr> -->
+        </table>
+      </div>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div align="center">
+      <button class="button" type="button" onclick="window.print();return false;" class="print"> VOUCHER </button>
+      <br />
+      <br />
+      <a type="button" href="/cashform" class="button"> BACK </a>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>
+
+    <!-- <script>
+        const trashcan = document.querySelector('a.delete');
+
+        trashcan.addEventListener('click', (e) => {
+          const endpoint = `/api/v1/cash-payment/${trashcan.dataset.doc}`;
+
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+            .then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        });
+
+      </script> -->
+
+  </body>
+
+</html>

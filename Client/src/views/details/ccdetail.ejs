@@ -1,0 +1,92 @@
+<br /><br /><br />
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+  <body>
+    <div class="details-content">
+      <div align="center">
+        <br />
+        <h4>ID pay from CC: </h4>
+        <p>
+          <%= ccPayment._id %>
+        </p>
+      </div>
+      <div class="content">
+
+        <table width="80%" id="alignment">
+          <tr>
+            <td>
+              <label><b>Pay reference: </b></label>
+              <input id="ccDetailReference" type="text" value="<%= ccPayment.ccreference %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>User email: </label>
+              <input id="ccDetailUserEmail" type="text" value="<%= ccPayment.ccuserEmail %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Credit card name: </label>
+              <input id="ccDetailCCName" type="text" value="<%= ccPayment.ccName %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Level: </label>
+              <input id="ccDetailLevel" type="text" value="<%= ccPayment.cclevel %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Amount pay: </label>
+              <input id="ccDetailAmount" type="text" value="$ <%= ccPayment.ccamount %>" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label><b>Cellphone: </label>
+              <input id="ccDetailCellphone" type="text" value="<%= ccPayment.cccellphone %>" disabled>
+            </td>
+          </tr>
+          <!-- <tr> 
+          <td>
+             <a class="delete" data-doc="<%= ccPayment._id %>">delete</a>
+          </td>
+        </tr> -->
+        </table>
+      </div>
+      <br />
+      <br />
+    </div>
+    <br />
+    <div align="center">
+      <button class="button" type="button" onclick="window.print();return false;" class="print"> VOUCHER </button>
+      <br />
+      <br />
+      <a type="button" href="/ccform" class="button"> BACK </a>
+    </div>
+
+
+    <%- include("../partials/footer.ejs") %>
+
+    <!-- <script>
+        const trashcan = document.querySelector('a.delete');
+
+        trashcan.addEventListener('click', (e) => {
+          const endpoint = `/api/v1/credit-card-payment/${trashcan.dataset.doc}`;
+
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+            .then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+        });
+
+      </script> -->
+
+  </body>
+
+</html>

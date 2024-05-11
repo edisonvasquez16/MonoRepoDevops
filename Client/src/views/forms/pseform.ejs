@@ -1,0 +1,85 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+    <body>
+        <%- include("../partials/navigation.ejs") %>
+            <div>
+                <h3>Pay for PSE</h3>
+                <p>
+                    Form where we will be able to make the payment of the invoice by means of PSE
+                </p>
+                <br />
+                <form action="/pseform/create" method="post">
+                    <table width="100%" id="alignment">
+                        <tr>
+                            <td>
+                                <label class="required" for="psereference"><b>Pay reference:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="10" required type="text" id="psereference" name="psereference"
+                                    placeholder="AB0001PAY" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="psereferencePse"><b>Pay reference PSE:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="10" required type="text" id="psereferencePse"
+                                    name="psereferencePse" placeholder="AB0001PSE" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="pseuserEmail"><b>User email:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="50" required type="email" id="pseuserEmail"
+                                    name="pseuserEmail" placeholder="usuario.pago@gmail.com" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="psefullNameUser"><b>Full name:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="5" maxlength="50" required type="text" id="psefullNameUser"
+                                    name="psefullNameUser" placeholder="Usurio de pagos" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="psecellphone"><b>Cellphone:</b> </label>
+                            </td>
+                            <td>
+                                <input minlength="10" maxlength="15" onkeypress="validateNumberText(event)"
+                                    minlength="10" maxlength="15" required type="text" id="psecellphone" name="psecellphone"
+                                    placeholder="3225558899" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="required" for="pseamount"><b>Amount:</b> </label>
+                            </td>
+                            <td>
+                                <input required type="text" id="pseamount" name="pseamount" placeholder="$15.000"
+                                    onkeydown="if(this.value.length==7) return false;" onkeypress="validateNumberText(event)"/>
+                            </td>
+                        </tr>
+                    </table>
+                    </br>
+                    <div align="center">
+                        <button class="button" type="submit" name="savePSEPayment" id="savePSEPayment"> Save </button>
+                    </div>
+                </form>
+            </div>
+            <button class="accordion">Pse payments saved</button>
+            <div class="panel">
+                <br />
+                <%- include("../tables/pseresults.ejs") %>
+            </div>
+            <%- include("../partials/footer.ejs") %>
+
+    </body>
+
+</html>

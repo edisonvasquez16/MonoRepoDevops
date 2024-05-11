@@ -1,0 +1,13 @@
+{
+    "reference": "CCUSER",
+    "ccName": "USER CC ",
+    "ccNumber": "4111 5555 8888 6666",
+    "level": "VISA",
+    "ccMonthExp": 0,
+    "ccYearExp": 0,
+    "dues": 0,
+    "ccSecurityCode": 0,
+    "userEmail": "usercc",
+    "amount": 0,
+    "cellphone": "5732"
+  }

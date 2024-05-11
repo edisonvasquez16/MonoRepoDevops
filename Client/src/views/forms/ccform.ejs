@@ -1,0 +1,162 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+
+    <body>
+        <%- include("../partials/navigation.ejs") %>
+            <div>
+                <h3>Pay with Credit card</h3>
+                <p>
+                    Form where we will be able to make the payment of the invoice by means of Credit card
+                </p>
+                <br />
+                <form action="/ccform/create" method="post">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccreference"><b>Pay reference:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="5" maxlength="10" required type="text" id="ccreference"
+                                                name="ccreference" placeholder="Pay reference" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccName"><b>CC. Name:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="10" maxlength="50" required type="text" id="ccName"
+                                                name="ccName" placeholder="NOMBRE EN TARJETA" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccNumber"><b>CC. Number:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="16" maxlength="16" onkeypress="validateNumberText(event)"
+                                                required type="text" id="ccNumber" name="ccNumber"
+                                                placeholder="4111 5555 2222 9999" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="cclevel"><b>Type:</b> </label>
+                                        </td>
+                                        <td>
+                                            <select name="cclevel" id="cclevel">
+                                                <option value="null">Select option...</option>
+                                                <option value="VISA">VISA</option>
+                                                <option value="MASTERCARD">MASTERCARD</option>
+                                                <option value="AMERICAN_EXPRESS">AMERICAN EXPRESS</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccYearExp"><b>Year:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input min="23" max="50" maxlength="2" required type="number" id="ccYearExp"
+                                                name="ccYearExp" placeholder="26"
+                                                onKeyPress="if(this.value.length==2) return false;" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccMonthExp"><b>Month:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input min="1" max="12" maxlength="2" required type="number" id="ccMonthExp"
+                                                name="ccMonthExp" placeholder="10"
+                                                onKeyPress="if(this.value.length==2) return false;" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccDues"><b>Dues:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="1" maxlength="2" onkeypress="validateNumberText(event)"
+                                                required type="text" id="ccDues" name="ccDues"
+                                                placeholder="12" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccSecurityCode"><b>CCV: </b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="3" maxlength="3" onkeypress="validateNumberText(event)"
+                                                required type="password" id="ccSecurityCode" name="ccSecurityCode"
+                                                placeholder="123" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccuserEmail"><b>Email:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="5" maxlength="50" required type="email" id="ccuserEmail"
+                                                name="ccuserEmail" placeholder="usuario.pago@gmail.com" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccPayDate"><b>Date:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input required type="date" id="ccPayDate" 
+                                                name="ccPayDate" readonly/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="ccamount"><b>Amount:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input required type="text" id="ccamount" name="ccamount" placeholder="$15.000"
+                                                onkeydown="if(this.value.length==7) return false;" onkeypress="validateNumberText(event)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="required" for="cccellphone"><b>Cellphone:</b> </label>
+                                        </td>
+                                        <td>
+                                            <input minlength="10" maxlength="15" onkeypress="validateNumberText(event)"
+                                                required type="text" id="cccellphone" name="cccellphone"
+                                                placeholder="3228529999" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>
+                    </br>
+                    <div align="center">
+                        <button class="button" type="submit" name="saveCCPayment" id="saveCCPayment"> Save </button>
+                    </div>
+                </form>
+            </div>
+            <button class="accordion">Credit card payments saved</button>
+            <div class="panel">
+                <br />
+                <%- include("../tables/ccresults.ejs") %>
+            </div>
+            <%- include("../partials/footer.ejs") %>
+
+    </body>
+    <script>
+        document.getElementById("ccPayDate").valueAsDate = new Date();
+    </script>
+
+</html>
