@@ -1,40 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
-
-/* Estilos generales */
 html {
   display: table;
   margin: auto;
-  background-color: #f2f7fd; /* Fondo azul claro */
 }
 
+/* Cambios de color */
 body {
   max-width: 80%;
   margin: 20px auto;
   padding: 0 20px;
   font-family: 'Noto Serif', serif;
   display: table-cell;
+  background-color: #dbe4f7; /* Nuevo color de fondo */
 }
 
-p,
-h1,
-h2,
-a,
-ul {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  color: #222;
-}
-
-/* nav & footer styles */
 nav {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
   text-transform: uppercase;
   width: 100%;
+  border-bottom: 1px solid #b3c7e0; /* Nuevo color de borde */
 }
 
 nav ul {
@@ -48,75 +34,51 @@ nav li {
   margin-left: 20px;
 }
 
-nav p,
-nav a {
-  color: #666; /* Tono de azul claro para el texto del menú */
-  font-weight: 500; /* Hacer el texto un poco más grueso */
+nav a,
+nav p {
+  color: #4a90e2; /* Nuevo color de texto */
+  font-weight: 800;
 }
 
-footer {
-  color: #777;
-  text-align: center;
-  margin: 80px auto 20px;
-}
-
-h2 {
-  margin-bottom: 40px;
-}
-
-.content {
-  margin-left: 20px;
-}
-
-/* Botones */
 button {
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  background-color: #1e88e5; /* Tono de azul más oscuro para botones */
-  color: #fff; 
-  cursor: pointer; 
-  transition: background-color 0.3s ease; /* Efecto de transición */
+  background-color: #4a90e2; /* Nuevo color de fondo del botón */
+  border: 1px solid #4a90e2; /* Nuevo color de borde del botón */
 }
 
 button:hover {
-  background-color: #0d47a1; /* Tono de azul más oscuro al pasar el cursor */
+  background-color: #357dbf; /* Nuevo color de fondo al pasar el cursor */
 }
 
-/* Acordeón */
+input[type=text],
+input[type=date],
+input[type=password],
+input[type=number],
+input[type=email],
+select {
+  background: #dbeaff; /* Nuevo color de fondo para campos de entrada */
+  border: 1px solid #4a90e2; /* Nuevo color de borde para campos de entrada */
+}
+
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+input[type=email]:focus,
+select:focus {
+  background-color: #c4e1ff; /* Nuevo color de fondo al enfocarse en campos de entrada */
+}
+
+/* Otros ajustes */
 .accordion {
-  background-color: #f0f7ff; /* Fondo del acordeón */
-  color: #444; /* Texto más oscuro para mayor contraste */
+  background-color: #dbeaff; /* Nuevo color de fondo para acordeones */
+  color: #737373;
   cursor: pointer;
   padding: 10px;
   width: 100%;
   text-align: left;
   border: none;
   outline: none;
-  transition: background-color 0.3s ease; /* Efecto de transición */
-}
-
-.active,
-.accordion:hover {
-  background-color: #d4e6ff; /* Color de fondo más claro al pasar el cursor */
-}
-
-.panel {
-  padding: 0 18px;
-  background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  border-style: dotted;
-  border: 1px solid rgb(193, 191, 191);
-  border-radius: 5px;
-}
-
-.details-content {
-  background-color: white;
-  border-style: dotted;
-  border: 1px solid rgb(193, 191, 191);
-  border-radius: 10px;
+  transition: 0.4s;
 }
 
 .accordion:after {
@@ -131,36 +93,78 @@ button:hover {
   content: "\2796";
 }
 
-/* Campos de entrada */
-::placeholder {
-  text-transform: none;
-  color: #ccc; /* Color de texto gris para los campos de entrada */
+.active,
+.accordion:hover {
+  background-color: #b3c7e0; /* Nuevo color de fondo para acordeones activos o al pasar el cursor */
 }
 
-input[type=text], 
-input[type=date],
-input[type=password],
-input[type=number],
-input[type=email],
-select {
+.panel {
+  padding: 0 18px;
+  background-color: #f2f6ff; /* Nuevo color de fondo para paneles */
+  border: 1px solid #b3c7e0; /* Nuevo color de borde para paneles */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-style: dotted;
+  border-radius: 5px;
+}
+
+.details-content {
+  background-color: #f2f6ff; /* Nuevo color de fondo para contenido detallado */
+  border-style: dotted;
+  border: 1px solid rgb(193, 191, 191);
+  border-radius: 10px;
+}
+
+/* Otros estilos */
+button,
+input[type=submit] {
+  padding: 12px 24px; /* Ajuste de espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  color: white; /* Color de texto */
+  cursor: pointer; /* Cursor de puntero */
+}
+
+button:hover,
+input[type=submit]:hover {
+  background-color: #357dbf; /* Nuevo color de fondo al pasar el cursor */
+}
+
+footer {
+  color: #777;
+  text-align: center;
+  margin: 80px auto 20px;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-weight: 800; /* Ajusta el peso de la fuente según sea necesario */
+}
+
+.content {
+  margin-left: 20px;
+}
+
+#alignment {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+::placeholder {
+  text-transform: none;
+  color: rgb(209, 206, 206);
+}
+
+select, input[type=text], input[type=date], input[type=password], input[type=number], input[type=email] {
   width: 100%;
   padding: 12px;
   margin: 5px 0 10px 0;
   display: inline-block;
   border: none;
-  background: #f0f7ff; /* Fondo azul claro para los campos */
   border-radius: 5px;
-  transition: background-color 0.3s ease; /* Efecto de transición */
-}
-
-input[type=text]:focus, 
-input[type=date]:focus,
-input[type=password]:focus,
-input[type=number]:focus,
-input[type=email]:focus,
-select:focus {
-  background-color: #d4e6ff; /* Color de fondo más claro cuando está enfocado */
-  outline: none;
 }
 
 .required:after {
@@ -172,4 +176,15 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.site-title h1 {
+  width: 100%;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  margin-left: 30%;
+  font-size: 36px;
+  font-family: 'Arial', sans-serif;
+  color: #357dbf;
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
 }
