@@ -10,7 +10,7 @@ body {
   padding: 0 20px;
   font-family: 'Noto Serif', serif;
   display: table-cell;
-  background-color: #dbe4f7; /* Nuevo color de fondo */
+  background-color: #f2f6ff; /* Nuevo color de fondo */
 }
 
 nav {
@@ -41,12 +41,12 @@ nav p {
 }
 
 button {
-  background-color: #4a90e2; /* Nuevo color de fondo del botón */
+  background-color: #88bcf8; /* Nuevo color de fondo del botón */
   border: 1px solid #4a90e2; /* Nuevo color de borde del botón */
 }
 
 button:hover {
-  background-color: #357dbf; /* Nuevo color de fondo al pasar el cursor */
+  background-color: #5791c7; /* Nuevo color de fondo al pasar el cursor */
 }
 
 input[type=text],
@@ -55,7 +55,7 @@ input[type=password],
 input[type=number],
 input[type=email],
 select {
-  background: #dbeaff; /* Nuevo color de fondo para campos de entrada */
+  background: #e5f0ff; /* Nuevo color de fondo para campos de entrada */
   border: 1px solid #4a90e2; /* Nuevo color de borde para campos de entrada */
 }
 
@@ -127,7 +127,7 @@ input[type=submit] {
 
 button:hover,
 input[type=submit]:hover {
-  background-color: #357dbf; /* Nuevo color de fondo al pasar el cursor */
+  background-color: #6fb7fa; /* Nuevo color de fondo al pasar el cursor */
 }
 
 footer {
