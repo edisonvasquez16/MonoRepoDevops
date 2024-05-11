@@ -4,7 +4,7 @@ class CashFormPage {
         ccreference: () => cy.get("input#ccreference"),
         ccName: () => cy.get("input#ccName"),
         ccNumber: () => cy.get("input#ccNumber"),
-        ccLevel: () => cy.get("select#ccLevel"),
+        ccLevel: () => cy.get("select#cclevel"),
         ccYearExp: () => cy.get("input#ccYearExp"),
         ccMonthExp: () => cy.get("input#ccMonthExp"),
         ccDues: () => cy.get("input#ccDues"),
