@@ -1,5 +1,5 @@
 module.exports = {
-    dev: 3030,
-    st: 4040,
-    pro: 5050
+    dev: 1010,
+    st: 2020,
+    pro: 3030
 };
