@@ -1,6 +1,10 @@
 const path = require('path')
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
+const config = require('../config/ports')
+
+const environment = process.env.environment || 'dev'; 
+const port = config[environment]
 
 const swaggerSpec = {
     definition: {
@@ -11,7 +15,7 @@ const swaggerSpec = {
         },
         servers: [
             {
-                url: process.env.HOST + ":" + process.env.PORT
+                url: process.env.HOST + ":" + port
             }
         ]
     },
