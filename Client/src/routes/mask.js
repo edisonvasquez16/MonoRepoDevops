@@ -4,8 +4,10 @@ const psePaymentSchema = require('../models/psePayment')
 const express = require('express')
 const router = express.Router()
 const axios = require('axios');
+const config = require('../config/server-ports')
 
-const path = process.env.HOST + ":" + process.env.SERVER_PORT 
+const environment = process.env.environment || 'dev'; 
+const path = process.env.HOST + ":" + config[environment]
 
 //GET ALL ITEMS TO LIST
 router.get("/cashform", async (req, res) => {
