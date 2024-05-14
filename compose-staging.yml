@@ -5,6 +5,7 @@ services:
     image: clientstaging
     restart: always 
     build:
+      context: ./Client
       args:
         - branch=staging
     ports: 
@@ -17,6 +18,7 @@ services:
     image: serverstaging
     restart: always 
     build:
+      context: ./Server
       args:
         - branch=staging
     ports: 

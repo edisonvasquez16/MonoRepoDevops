@@ -5,6 +5,7 @@ services:
     image: clientdevelop
     restart: always 
     build:
+      context: ./Client
       args:
         - branch=develop
     ports: 
@@ -17,6 +18,7 @@ services:
     image: serverdevelop
     restart: always 
     build:
+      context: ./Server
       args:
         - branch=develop
     ports: 
