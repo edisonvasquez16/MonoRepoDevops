@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
 
+/* Estilos generales */
 html {
   display: table;
   margin: auto;
+  background-color: #f2f7fd; /* Fondo azul claro */
 }
 
 body {
@@ -48,8 +50,8 @@ nav li {
 
 nav p,
 nav a {
-  color: #777;
-  font-weight: 300;
+  color: #666; /* Tono de azul claro para el texto del menú */
+  font-weight: 500; /* Hacer el texto un poco más grueso */
 }
 
 footer {
@@ -66,50 +68,37 @@ h2 {
   margin-left: 20px;
 }
 
-#alignment {
-  margin-left: auto;
-  margin-right: auto;
+/* Botones */
+button {
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  background-color: #1e88e5; /* Tono de azul más oscuro para botones */
+  color: #fff; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
-.button {
-  background-color: #d6d6d6;
-  border: 2px;
-  color: black;
-  padding: 2px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  margin: 1px 2px;
-  cursor: pointer;
-  width: 50%;
+button:hover {
+  background-color: #0d47a1; /* Tono de azul más oscuro al pasar el cursor */
 }
 
-.button:hover {
-  background-color: #E0E0E0
-}
-
-.button:active {
-  background-color: #5c5c5c;
-  box-shadow: 0 2px #666;
-  transform: translateY(4px);
-}
-
+/* Acordeón */
 .accordion {
-  background-color: #eee;
-  color: #737373;
+  background-color: #f0f7ff; /* Fondo del acordeón */
+  color: #444; /* Texto más oscuro para mayor contraste */
   cursor: pointer;
   padding: 10px;
   width: 100%;
   text-align: left;
   border: none;
   outline: none;
-  transition: 0.4s;
+  transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
 .active,
 .accordion:hover {
-  background-color: #ccc;
+  background-color: #d4e6ff; /* Color de fondo más claro al pasar el cursor */
 }
 
 .panel {
@@ -142,29 +131,36 @@ h2 {
   content: "\2796";
 }
 
+/* Campos de entrada */
 ::placeholder {
   text-transform: none;
-  color: rgb(209, 206, 206);
+  color: #ccc; /* Color de texto gris para los campos de entrada */
 }
 
-input[type=text], input[type=date]{
-  text-transform: uppercase;
-}
-
-select, input[type=text], input[type=date], input[type=password], input[type=number], input[type=email] {
+input[type=text], 
+input[type=date],
+input[type=password],
+input[type=number],
+input[type=email],
+select {
   width: 100%;
   padding: 12px;
   margin: 5px 0 10px 0;
   display: inline-block;
   border: none;
-  background: #eae9e9;
+  background: #f0f7ff; /* Fondo azul claro para los campos */
   border-radius: 5px;
+  transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
-input[type=text]:focus, input[type=text]:focus,input[type=password]:focus, input[type=number]:focus, input[type=email]:focus {
-  background-color: #f6f6f6;
+input[type=text]:focus, 
+input[type=date]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+input[type=email]:focus,
+select:focus {
+  background-color: #d4e6ff; /* Color de fondo más claro cuando está enfocado */
   outline: none;
-  border-radius: 10px;
 }
 
 .required:after {
