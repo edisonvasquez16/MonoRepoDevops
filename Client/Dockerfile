@@ -9,3 +9,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 4040
+
+CMD ["npm", "run", "${branch}"]
