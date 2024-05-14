@@ -28,7 +28,7 @@ services:
     links:
       - mongost
     
-  mongo:
+  mongost:
     container_name: mongost
     image: mongodb/mongodb-community-server
     volumes: 
