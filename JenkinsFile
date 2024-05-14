@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: "Environment", choices: ["main", "staging", "develop"], description: "Environment to deploy")
+    }
+    stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    def dockerHome = tool 'DockerJenkins'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
+            }
+        }
+        stage('SCM') {
+            steps {
+                //git branch: "${params.Environment}",
+                git branch: "add-docker-compose-build",
+                url: "https://github.com/edisonvasquez16/MonoRepoDevops.git",
+                credentialsId: "d96b6461-c1d5-437a-a278-42b00acd3dce"
+            }
+        }
+        stage("Build BackEnd image") {
+            steps {
+                sh "cd Server && docker build -t server${params.Environment} ."
+            }
+        }
+        stage("Build FrontEnd image") {
+            steps {
+                sh "cd Client && docker build -t client${params.Environment} ."
+            }
+        }
+        stage("Run application") {
+            steps {
+                sh "docker-compose -f compose-${params.Environment}.yml up"
+            }
+        }
+    }
+}
