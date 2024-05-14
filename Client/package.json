@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "main": "environment=pro node src/app.js",
-    "staging": "environment=st nodemon src/app.js",
-    "develop": "environment=dev nodemon src/app.js",
+    "main": "node src/app.js",
+    "staging": "nodemon src/app.js",
+    "develop": "nodemon src/app.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
     "test-mocha": "mocha ./src/tests/mocha/*.spec.js --reporter spec",
     "jest": "jest",
