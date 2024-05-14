@@ -9,9 +9,9 @@ services:
       - BRANCH=develop
       - ENVIRONMENT=dev
     ports: 
-    - '4040:4040'
+    - '2020:2020'
     expose:
-      - '4040'
+      - '2020'
 
   webapi: 
     container_name: serverdev
@@ -22,9 +22,9 @@ services:
       - BRANCH=develop
       - ENVIRONMENT=dev
     ports: 
-      - '4000:4000'
+      - '2000:2000'
     expose:
-      - '4000'  
+      - '2000'  
     links:
       - mongo
     
