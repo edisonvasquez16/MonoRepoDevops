@@ -32,7 +32,7 @@ services:
     container_name: mongopro 
     image: mongodb/mongodb-community-server
     volumes: 
-      - mongo_data:/data/db
+      - mongodb_data:/data/db
     ports:
       - '27017:27019'
 
