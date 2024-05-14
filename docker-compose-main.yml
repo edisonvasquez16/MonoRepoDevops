@@ -4,7 +4,9 @@ services:
     container_name: clientpro
     image: clientmain
     restart: always 
-    build: .
+    build:
+      args:
+        - branch=main
     ports: 
     - '4040:4040'
     expose:
@@ -14,7 +16,9 @@ services:
     container_name: serverpro
     image: servermain
     restart: always 
-    build: .
+    build:
+      args:
+        - branch=main
     ports: 
       - '4000:4000'
     expose:
