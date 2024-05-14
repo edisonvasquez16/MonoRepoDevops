@@ -4,10 +4,8 @@ services:
     container_name: clientpro
     image: clientmain
     restart: always 
-    build:
-      context: ./Client
-      args:
-        - branch=main
+    environment:
+      - branch="main"
     ports: 
     - '4040:4040'
     expose:
@@ -17,10 +15,8 @@ services:
     container_name: serverpro
     image: servermain
     restart: always 
-    build:
-      context: ./Server
-      args:
-        - branch=main
+    environment:
+      - branch="main"
     ports: 
       - '4000:4000'
     expose:

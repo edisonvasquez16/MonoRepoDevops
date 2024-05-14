@@ -4,10 +4,8 @@ services:
     container_name: clientdev
     image: clientdevelop
     restart: always 
-    build:
-      context: ./Client
-      args:
-        - branch=develop
+    environment:
+      - branch="develop"
     ports: 
     - '4040:4040'
     expose:
@@ -17,10 +15,8 @@ services:
     container_name: serverdev
     image: serverdevelop
     restart: always 
-    build:
-      context: ./Server
-      args:
-        - branch=develop
+    environment:
+      - branch="develop"
     ports: 
       - '4000:4000'
     expose:
