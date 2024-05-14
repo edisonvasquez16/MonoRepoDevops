@@ -10,6 +10,7 @@ const ccRoutes = require('./routes/creaditCardPayment')
 const swaggerConfig = require('./config/swaggerConfig')
 const morgan = require('morgan')
 const config = require('./config/ports')
+const configbd = require('./config/portsbd')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -26,10 +27,11 @@ app.use((req, res) => {
 
 const environment = process.env.environment || 'dev'; 
 const port = config[environment]
+const portbd = configbd[environment]
 
 mongoose
-.connect(process.env.MONGO_BASE + environment + process.env.MONGO_PORT)
-    .then(() => console.log('Connected to MongoDB Successfull!', environment, port))
+.connect(process.env.MONGO_BASE + environment + ":" + portbd + process.env.MONGO_NAME)
+    .then(() => console.log('Connected to MongoDB Successfull!', environment, portbd))
     .catch((error) => (console.error(error)))
 
 app.listen(port, () => console.log('Server listening environment and port: ', environment, port))
