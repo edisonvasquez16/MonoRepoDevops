@@ -26,10 +26,10 @@ services:
     expose:
       - '3000'  
     links:
-      - mongo
+      - mongost
     
   mongo:
-    container_name: mongo 
+    container_name: mongost
     image: mongodb/mongodb-community-server
     volumes: 
       - ./data:/data/db
