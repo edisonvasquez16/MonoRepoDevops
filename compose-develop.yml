@@ -1,0 +1,37 @@
+version: '3.7' 
+services:
+  app: 
+    container_name: clientdev
+    image: clientdevelop
+    restart: always 
+    build: .
+    environment:
+      - BRANCH=develop
+      - ENVIRONMENT=dev
+    ports: 
+    - '4040:4040'
+    expose:
+      - '4040'
+
+  webapi: 
+    container_name: serverdev
+    image: serverdevelop
+    restart: always 
+    build: .
+    environment:
+      - BRANCH=develop
+      - ENVIRONMENT=dev
+    ports: 
+      - '4000:4000'
+    expose:
+      - '4000'  
+    links:
+      - mongo
+    
+  mongo:
+    container_name: mongo 
+    image: mongodb/mongodb-community-server
+    volumes: 
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
