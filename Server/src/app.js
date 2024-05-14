@@ -10,7 +10,6 @@ const ccRoutes = require('./routes/creaditCardPayment')
 const swaggerConfig = require('./config/swaggerConfig')
 const morgan = require('morgan')
 const config = require('./config/ports')
-const configbd = require('./config/portsbd')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -27,11 +26,12 @@ app.use((req, res) => {
 
 const environment = process.env.environment || 'dev'; 
 const port = config[environment]
-const portbd = configbd[environment]
 
+const pathdb = process.env.MONGO_BASE + environment + ":" + process.env.MONGO_NAME
+console.log('Connect to MongoDB for path:', pathdb)
 mongoose
-.connect(process.env.MONGO_BASE + environment + ":" + portbd + process.env.MONGO_NAME)
-    .then(() => console.log('Connected to MongoDB Successfull!', environment, portbd))
+.connect(pathdb, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB Successfull!'))
     .catch((error) => (console.error(error)))
 
 app.listen(port, () => console.log('Server listening environment and port: ', environment, port))

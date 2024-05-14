@@ -1,40 +1,53 @@
-version: '3.7' 
+version: '3.7'
+
 services:
-  app: 
+  app:
     container_name: clientpro
     image: clientmain
-    restart: always 
+    restart: always
     build: .
     environment:
       - BRANCH=main
       - ENVIRONMENT=pro
-    ports: 
+    ports:
       - '4040:4040'
     expose:
       - '4040'
+    networks:
+      - prod-network
 
-  webapi: 
+  webapi:
     container_name: serverpro
     image: servermain
-    restart: always 
+    restart: always
     build: .
     environment:
       - BRANCH=main
       - ENVIRONMENT=pro
-    ports: 
+    ports:
       - '4000:4000'
     expose:
-      - '4000'  
-    links:
+      - '4000'
+    networks:
+      - prod-network
+    depends_on:
       - mongopro
-    
+
   mongopro:
-    container_name: mongopro 
-    image: mongodb/mongodb-community-server
-    volumes: 
-      - mongodb_data:/data/db
+    container_name: mongopro
+    image: mongo:7.0.10-rc0-jammy
+    volumes:
+      - mongodb_prod:/data/db
     ports:
-      - '27019:27017'
+      - '27017:27017'
+    expose:
+      - '27017'
+    networks:
+      - prod-network
+
+networks:
+  prod-network:
+    name: prod-network
 
 volumes:
-  mongodb_data:
+  mongodb_prod:
