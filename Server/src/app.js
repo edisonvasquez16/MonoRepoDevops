@@ -28,7 +28,7 @@ const environment = process.env.environment || 'dev';
 const port = config[environment]
 
 mongoose
-    .connect(process.env.MONGO_DATABASE + environment)
+.connect(process.env.MONGO_BASE + environment + process.env.MONGO_PORT)
     .then(() => console.log('Connected to MongoDB Successfull!', environment, port))
     .catch((error) => (console.error(error)))
 
