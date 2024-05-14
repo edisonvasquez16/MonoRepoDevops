@@ -9,9 +9,9 @@ services:
       - BRANCH=staging
       - ENVIRONMENT=st
     ports: 
-    - '4040:4040'
+    - '3030:3030'
     expose:
-      - '4040'
+      - '3030'
 
   webapi: 
     container_name: serverst
@@ -22,9 +22,9 @@ services:
       - BRANCH=staging
       - ENVIRONMENT=st
     ports: 
-      - '4000:4000'
+      - '3000:3000'
     expose:
-      - '4000'  
+      - '3000'  
     links:
       - mongo
     
