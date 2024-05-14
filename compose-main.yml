@@ -28,7 +28,7 @@ services:
     links:
       - mongopro
     
-  mongo:
+  mongopro:
     container_name: mongopro 
     image: mongodb/mongodb-community-server
     volumes: 

@@ -28,7 +28,7 @@ services:
     links:
       - mongodev
     
-  mongo:
+  mongodev:
     container_name: mongodev 
     image: mongodb/mongodb-community-server
     volumes: 
