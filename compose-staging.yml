@@ -30,8 +30,13 @@ services:
     
   mongost:
     container_name: mongost
-    image: mongodb/mongodb-community-server
+    image: mongo:7.0.10-rc0-jammy
     volumes: 
-      - ./data:/data/db
+      - mongodb_st:/data/db
     ports:
-      - '27017:27018'
+      - '27017:27017'
+    expose:
+      - '27017'
+
+volumes:
+  mongodb_st:
