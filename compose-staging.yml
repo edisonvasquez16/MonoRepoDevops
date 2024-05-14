@@ -1,13 +1,13 @@
-version: '3' 
+version: '3.7' 
 services:
   app: 
     container_name: clientst
     image: clientstaging
     restart: always 
-    build:
-      context: ./Client
-      args:
-        - branch='staging'
+    build: .
+    environment:
+      - BRANCH=staging
+      - ENVIRONMENT=st
     ports: 
     - '4040:4040'
     expose:
@@ -17,10 +17,10 @@ services:
     container_name: serverst
     image: serverstaging
     restart: always 
-    build:
-      context: ./Server
-      args:
-        - branch='staging'
+    build: .
+    environment:
+      - BRANCH=staging
+      - ENVIRONMENT=st
     ports: 
       - '4000:4000'
     expose:

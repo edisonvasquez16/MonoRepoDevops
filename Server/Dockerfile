@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.19
+FROM node:14
 
 WORKDIR /app
 
@@ -8,6 +8,4 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 4000
-
-CMD ["npm", "run", "${branch}"]
+CMD export environment=${ENVIRONMENT} && npm run ${BRANCH}

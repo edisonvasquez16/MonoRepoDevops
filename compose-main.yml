@@ -1,15 +1,15 @@
-version: '3' 
+version: '3.7' 
 services:
   app: 
     container_name: clientpro
     image: clientmain
     restart: always 
-    build:
-      context: ./Client
-      args:
-        - branch='main'
+    build: .
+    environment:
+      - BRANCH=main
+      - ENVIRONMENT=pro
     ports: 
-    - '4040:4040'
+      - '4040:4040'
     expose:
       - '4040'
 
@@ -17,10 +17,10 @@ services:
     container_name: serverpro
     image: servermain
     restart: always 
-    build:
-      context: ./Server
-      args:
-        - branch='main'
+    build: .
+    environment:
+      - BRANCH=main
+      - ENVIRONMENT=pro
     ports: 
       - '4000:4000'
     expose:
