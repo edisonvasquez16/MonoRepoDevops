@@ -7,7 +7,7 @@ const axios = require('axios');
 const config = require('../config/server-ports')
 
 const environment = process.env.environment || 'dev'; 
-const path = process.env.HOST + ":" + config[environment]
+const path = process.env.HOST_SERVER + environment + ":" + config[environment]
 
 //GET ALL ITEMS TO LIST
 router.get("/cashform", async (req, res) => {
