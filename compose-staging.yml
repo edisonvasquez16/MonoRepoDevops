@@ -46,7 +46,7 @@ services:
 
 networks:
   st-network:
-    name: pro-network
+    name: st-network
     driver: bridge
 
 volumes:
