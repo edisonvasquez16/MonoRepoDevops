@@ -34,9 +34,9 @@ services:
     volumes: 
       - mongodb_st:/data/db
     ports:
-      - '27017:27017'
+      - '27018:27017'
     expose:
-      - '27017'
+      - '27018'
 
 volumes:
   mongodb_st:
