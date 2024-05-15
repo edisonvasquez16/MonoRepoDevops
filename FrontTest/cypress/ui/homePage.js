@@ -1,9 +1,8 @@
-const { model, models } = require("mongoose");
-
+const urlPage = Cypress.env('BASE_URL') + Cypress.env('CLIENT_PORT') + '/index'
 class HomePage {
 
 visit() {
-        cy.visit('http://localhost:1337/index');
+        cy.visit(urlPage);
         return this
     }
 
