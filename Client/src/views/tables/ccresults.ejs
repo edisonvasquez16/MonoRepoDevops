@@ -1,46 +1,44 @@
+<!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Payments</title>
+    <!-- Enlaza tus estilos CSS externos aquí -->
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-<div class="details content">
-    <table id="tablax" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr class="item"> 
-                <td>
-                    <h5 class="title">ID</h5>            
-                </td>
-                <td>
-                    <h5 class="snippet">Email</h5>            
-                </td>
-                <td>
-                    <h5 class="snippet">Cellphone</h5>    
-                </td>
-                <td>
-                    <h5 class="snippet">Options</h5>
-                </td>                            
-            </tr>
-        </thead>
-    <% if (ccPayments.results.length > 0) { %>
-        <% ccPayments.results.forEach(ccPayment => { %>
-                    <tr class="item"> 
-                        <td>
-                            <h6 class="title"><%= ccPayment._id %></h6>            
-                        </td>
-                        <td>
-                            <p class="snippet"><%= ccPayment.ccuserEmail %></p>            
-                        </td>
-                        <td>
-                            <p class="snippet"><%= ccPayment.cccellphone %></p>    
-                        </td>
-                        <td>
-                            <form action="/details/ccdetail/<%= ccPayment._id %>">
-                                <input class="button" type="submit" value="Print" />
-                            </form>
-                        </td>                            
-                    </tr>                              
-        <% }) %>
-      <% } else { %>
-        <p>There are no cash payments to display...</p>
-      <% } %>
-    </table>
-</div>
+    <div class="details-content">
+        <table id="table-cc-payments" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Cellphone</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (ccPayments.results.length > 0) { %>
+                    <% ccPayments.results.forEach(ccPayment => { %>
+                        <tr>
+                            <td><%= ccPayment._id %></td>
+                            <td><%= ccPayment.ccuserEmail %></td>
+                            <td><%= ccPayment.cccellphone %></td>
+                            <td>
+                                <form action="/details/ccdetail/<%= ccPayment._id %>">
+                                    <input class="button" type="submit" value="Print" />
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">There are no credit card payments to display...</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

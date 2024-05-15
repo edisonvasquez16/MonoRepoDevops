@@ -1,38 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
-
 html {
   display: table;
   margin: auto;
 }
 
+/* Cambios de color */
 body {
   max-width: 80%;
   margin: 20px auto;
   padding: 0 20px;
   font-family: 'Noto Serif', serif;
   display: table-cell;
+  background-color: #f2f6ff; /* Nuevo color de fondo */
 }
 
-p,
-h1,
-h2,
-a,
-ul {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  color: #222;
-}
-
-/* nav & footer styles */
 nav {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
   text-transform: uppercase;
   width: 100%;
+  border-bottom: 1px solid #b3c7e0; /* Nuevo color de borde */
 }
 
 nav ul {
@@ -46,57 +34,43 @@ nav li {
   margin-left: 20px;
 }
 
-nav p,
-nav a {
-  color: #777;
-  font-weight: 300;
+nav a,
+nav p {
+  color: #4a90e2; /* Nuevo color de texto */
+  font-weight: 800;
 }
 
-footer {
-  color: #777;
-  text-align: center;
-  margin: 80px auto 20px;
+button {
+  background-color: #88bcf8; /* Nuevo color de fondo del botón */
+  border: 1px solid #4a90e2; /* Nuevo color de borde del botón */
 }
 
-h2 {
-  margin-bottom: 40px;
+button:hover {
+  background-color: #5791c7; /* Nuevo color de fondo al pasar el cursor */
 }
 
-.content {
-  margin-left: 20px;
+input[type=text],
+input[type=date],
+input[type=password],
+input[type=number],
+input[type=email],
+select {
+  background: #e5f0ff; /* Nuevo color de fondo para campos de entrada */
+  border: 1px solid #4a90e2; /* Nuevo color de borde para campos de entrada */
 }
 
-#alignment {
-  margin-left: auto;
-  margin-right: auto;
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+input[type=email]:focus,
+select:focus {
+  background-color: #c4e1ff; /* Nuevo color de fondo al enfocarse en campos de entrada */
 }
 
-.button {
-  background-color: #d6d6d6;
-  border: 2px;
-  color: black;
-  padding: 2px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 15px;
-  margin: 1px 2px;
-  cursor: pointer;
-  width: 50%;
-}
-
-.button:hover {
-  background-color: #E0E0E0
-}
-
-.button:active {
-  background-color: #5c5c5c;
-  box-shadow: 0 2px #666;
-  transform: translateY(4px);
-}
-
+/* Otros ajustes */
 .accordion {
-  background-color: #eee;
+  background-color: #dbeaff; /* Nuevo color de fondo para acordeones */
   color: #737373;
   cursor: pointer;
   padding: 10px;
@@ -105,29 +79,6 @@ h2 {
   border: none;
   outline: none;
   transition: 0.4s;
-}
-
-.active,
-.accordion:hover {
-  background-color: #ccc;
-}
-
-.panel {
-  padding: 0 18px;
-  background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  border-style: dotted;
-  border: 1px solid rgb(193, 191, 191);
-  border-radius: 5px;
-}
-
-.details-content {
-  background-color: white;
-  border-style: dotted;
-  border: 1px solid rgb(193, 191, 191);
-  border-radius: 10px;
 }
 
 .accordion:after {
@@ -142,13 +93,69 @@ h2 {
   content: "\2796";
 }
 
+.active,
+.accordion:hover {
+  background-color: #b3c7e0; /* Nuevo color de fondo para acordeones activos o al pasar el cursor */
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: #f2f6ff; /* Nuevo color de fondo para paneles */
+  border: 1px solid #b3c7e0; /* Nuevo color de borde para paneles */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-style: dotted;
+  border-radius: 5px;
+}
+
+.details-content {
+  background-color: #f2f6ff; /* Nuevo color de fondo para contenido detallado */
+  border-style: dotted;
+  border: 1px solid rgb(193, 191, 191);
+  border-radius: 10px;
+}
+
+/* Otros estilos */
+button,
+input[type=submit] {
+  padding: 12px 24px; /* Ajuste de espaciado interno */
+  border-radius: 8px; /* Bordes redondeados */
+  color: white; /* Color de texto */
+  cursor: pointer; /* Cursor de puntero */
+}
+
+button:hover,
+input[type=submit]:hover {
+  background-color: #6fb7fa; /* Nuevo color de fondo al pasar el cursor */
+}
+
+footer {
+  color: #777;
+  text-align: center;
+  margin: 80px auto 20px;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-weight: 800; /* Ajusta el peso de la fuente según sea necesario */
+}
+
+.content {
+  margin-left: 20px;
+}
+
+#alignment {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 ::placeholder {
   text-transform: none;
   color: rgb(209, 206, 206);
-}
-
-input[type=text], input[type=date]{
-  text-transform: uppercase;
 }
 
 select, input[type=text], input[type=date], input[type=password], input[type=number], input[type=email] {
@@ -157,14 +164,7 @@ select, input[type=text], input[type=date], input[type=password], input[type=num
   margin: 5px 0 10px 0;
   display: inline-block;
   border: none;
-  background: #eae9e9;
   border-radius: 5px;
-}
-
-input[type=text]:focus, input[type=text]:focus,input[type=password]:focus, input[type=number]:focus, input[type=email]:focus {
-  background-color: #f6f6f6;
-  outline: none;
-  border-radius: 10px;
 }
 
 .required:after {
@@ -176,4 +176,15 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.site-title h1 {
+  width: 100%;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  margin-left: 30%;
+  font-size: 36px;
+  font-family: 'Arial', sans-serif;
+  color: #357dbf;
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
 }
