@@ -14,7 +14,7 @@ services:
     expose:
       - '4040'
     networks:
-      - prod-network
+      - pro-network
 
   webapi:
     container_name: serverpro
@@ -29,25 +29,26 @@ services:
     expose:
       - '4000'
     networks:
-      - prod-network
-    depends_on:
+      - pro-network
+    links:
       - mongopro
 
   mongopro:
     container_name: mongopro
     image: mongo:7.0.10-rc0-jammy
     volumes:
-      - mongodb_prod:/data/db
+      - mongodb:/data/db
     ports:
-      - '27019:27017'
+      - '27017:27017'
     expose:
-      - '27019'
+      - '27017'
     networks:
-      - prod-network
+      - pro-network
 
 networks:
-  prod-network:
-    name: prod-network
+  pro-network:
+    name: pro-network
+    driver: bridge
 
 volumes:
-  mongodb_prod:
+  mongodb:

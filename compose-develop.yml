@@ -12,6 +12,8 @@ services:
     - '2020:2020'
     expose:
       - '2020'
+    networks:
+      - dev-network
 
   webapi: 
     container_name: serverdev
@@ -27,16 +29,26 @@ services:
       - '2000'  
     links:
       - mongodev
+    networks:
+      - dev-network
     
   mongodev:
     container_name: mongodev 
     image: mongo:7.0.10-rc0-jammy
     volumes: 
-      - mongodb_dev:/data/db
+      - mongodb:/data/db
     ports:
       - '27017:27017'
     expose:
       - '27017' 
+    networks:
+      - dev-network
+        
+
+networks:
+  dev-network:
+    name: dev-network
+    driver: bridge
 
 volumes:
-  mongodb_dev:
+  mongodb:

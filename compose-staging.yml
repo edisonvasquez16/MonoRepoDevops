@@ -12,6 +12,8 @@ services:
     - '3030:3030'
     expose:
       - '3030'
+    networks:
+      - st-network
 
   webapi: 
     container_name: serverst
@@ -24,7 +26,9 @@ services:
     ports: 
       - '3000:3000'
     expose:
-      - '3000'  
+      - '3000'
+    networks:
+      - st-network  
     links:
       - mongost
     
@@ -32,11 +36,18 @@ services:
     container_name: mongost
     image: mongo:7.0.10-rc0-jammy
     volumes: 
-      - mongodb_st:/data/db
+      - mongodb:/data/db
     ports:
-      - '27018:27017'
+      - '27017:27017'
     expose:
-      - '27018'
+      - '27017'
+    networks:
+      - st-network
+
+networks:
+  st-network:
+    name: pro-network
+    driver: bridge
 
 volumes:
-  mongodb_st:
+  mongodb:
