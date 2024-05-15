@@ -14,8 +14,7 @@ const configdb = require('./config/dbports')
 const environment = process.env.environment || 'dev'; 
 const port = config[environment]
 const portdb = configdb[environment]
-const pathdb = process.env.MONGO_BASE + ":" + portdb + process.env.MONGO_NAME
-
+const pathdb = process.env.MONGO_BASE + environment + ":" + portdb + process.env.MONGO_NAME
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
