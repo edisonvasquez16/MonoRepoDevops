@@ -1,7 +1,2 @@
 node_modules/
-coverage/
-cypress/results/
-cypress/reports/
-cypress/screenshots/
-cypress/videos/
 .idea/
