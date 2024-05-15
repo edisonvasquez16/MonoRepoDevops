@@ -3,10 +3,14 @@ const request = require("supertest");
 const app = require("../../app-debug");
 require("dotenv").config();
 
+const environment = 'dev'; 
+const port = config[environment]
+const pathdb = process.env.MONGO_BASE + environment + ":" + port + process.env.MONGO_NAME
+
 beforeEach(async () => {
     await mongoose
-        .connect(process.env.MONGO_DATABASE_UNIT)
-        .then(() => console.log('Connected to MongoDB UNIT Successfull!'))
+        .connect(pathdb)
+        .then(() => console.log('Connected to MongoDB Successfull!'))
         .catch((error) => (console.error(error)))
 })
 
