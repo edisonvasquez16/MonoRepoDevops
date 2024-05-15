@@ -1,12 +1,13 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const request = require("supertest");
 const app = require("../../app-debug");
-require("dotenv").config();
+const config = require('../../config/dbports')
 
 const environment = 'dev'; 
 const port = config[environment]
-const pathdb = process.env.MONGO_BASE + environment + ":" + port + process.env.MONGO_NAME
-
+const pathdb = process.env.HOST + ":" + port + process.env.MONGO_NAME
+console.log('Connect to BD: ', pathdb)
 beforeEach(async () => {
     await mongoose
         .connect(pathdb)

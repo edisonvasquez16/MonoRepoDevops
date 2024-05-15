@@ -9,7 +9,7 @@ const cashRoutes = require('./routes/cashPayment')
 const ccRoutes = require('./routes/creaditCardPayment')
 const swaggerConfig = require('./config/swaggerConfig')
 const morgan = require('morgan')
-const config = require('./config/ports')
+const config = require('./config/dbports')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
