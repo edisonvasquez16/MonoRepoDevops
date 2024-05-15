@@ -9,7 +9,7 @@ const cashRoutes = require('./routes/cashPayment')
 const ccRoutes = require('./routes/creaditCardPayment')
 const swaggerConfig = require('./config/swaggerConfig')
 const morgan = require('morgan')
-const config = require('./config/ports')
+const config = require('./config/dbports')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -27,7 +27,9 @@ app.use((req, res) => {
 const environment = process.env.environment || 'dev'; 
 const port = config[environment]
 
-const pathdb = process.env.MONGO_BASE + environment + ":" + process.env.MONGO_NAME
+
+const pathdb = process.env.MONGO_BASE + environment + ":" + port + process.env.MONGO_NAME
+
 console.log('Connect to MongoDB for path:', pathdb)
 mongoose
 .connect(pathdb, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -1,12 +1,17 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const request = require("supertest");
 const app = require("../../app-debug");
-require("dotenv").config();
+const config = require('../../config/ports')
 
+const environment = 'dev'; 
+const port = config[environment]
+const pathdb = process.env.HOST + ":" + port + process.env.MONGO_NAME
+console.log('Connect to BD: ', pathdb)
 beforeEach(async () => {
     await mongoose
-        .connect(process.env.MONGO_DATABASE_UNIT)
-        .then(() => console.log('Connected to MongoDB UNIT Successfull!'))
+        .connect(pathdb)
+        .then(() => console.log('Connected to MongoDB Successfull!'))
         .catch((error) => (console.error(error)))
 })
 

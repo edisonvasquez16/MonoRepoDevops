@@ -39,9 +39,9 @@ services:
     volumes:
       - mongodb_prod:/data/db
     ports:
-      - '27017:27017'
+      - '27019:27017'
     expose:
-      - '27017'
+      - '27019'
     networks:
       - prod-network
 
