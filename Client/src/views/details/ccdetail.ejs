@@ -1,72 +1,128 @@
-<br /><br /><br />
+<!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Payment Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .details-content {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            color: #555;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #55c57a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none; /* para quitar la subrayado del enlace */
+            display: inline-block; /* para que el enlace se comporte como un botón */
+        }
+
+        .button:hover {
+            background-color: #3da25e;
+        }
+    </style>
+</head>
+<body>
+
 <%- include("../partials/head.ejs") %>
 
-  <body>
-    <div class="details-content">
-      <div align="center">
+<div class="details-content">
+    <div align="center">
         <br />
         <h4>ID pay from CC: </h4>
-        <p>
-          <%= ccPayment._id %>
-        </p>
-      </div>
-      <div class="content">
-
-        <table width="80%" id="alignment">
-          <tr>
-            <td>
-              <label><b>Pay reference: </b></label>
-              <input id="ccDetailReference" type="text" value="<%= ccPayment.ccreference %>" disabled>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label><b>User email: </label>
-              <input id="ccDetailUserEmail" type="text" value="<%= ccPayment.ccuserEmail %>" disabled>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label><b>Credit card name: </label>
-              <input id="ccDetailCCName" type="text" value="<%= ccPayment.ccName %>" disabled>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label><b>Level: </label>
-              <input id="ccDetailLevel" type="text" value="<%= ccPayment.cclevel %>" disabled>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label><b>Amount pay: </label>
-              <input id="ccDetailAmount" type="text" value="$ <%= ccPayment.ccamount %>" disabled>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <label><b>Cellphone: </label>
-              <input id="ccDetailCellphone" type="text" value="<%= ccPayment.cccellphone %>" disabled>
-            </td>
-          </tr>
-          <!-- <tr> 
-          <td>
-             <a class="delete" data-doc="<%= ccPayment._id %>">delete</a>
-          </td>
-        </tr> -->
+        <p><%= ccPayment._id %></p>
+    </div>
+    <div class="content">
+        <table>
+            <tr>
+                <td>
+                    <label><b>Pay reference:</b></label>
+                    <input type="text" value="<%= ccPayment.ccreference %>" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>User email:</b></label>
+                    <input type="text" value="<%= ccPayment.ccuserEmail %>" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>Credit card name:</b></label>
+                    <input type="text" value="<%= ccPayment.ccName %>" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>Level:</b></label>
+                    <input type="text" value="<%= ccPayment.cclevel %>" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>Amount pay:</b></label>
+                    <input type="text" value="$ <%= ccPayment.ccamount %>" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>Cellphone:</b></label>
+                    <input type="text" value="<%= ccPayment.cccellphone %>" disabled>
+                </td>
+            </tr>
         </table>
-      </div>
-      <br />
-      <br />
     </div>
     <br />
-    <div align="center">
-      <button class="button" type="button" onclick="window.print();return false;" class="print"> VOUCHER </button>
-      <br />
-      <br />
-      <a type="button" href="/ccform" class="button"> BACK </a>
-    </div>
+    <br />
+</div>
+<br />
+<div align="center">
+    <button class="button" type="button" onclick="window.print();return false;">VOUCHER</button>
+    <br />
+    <br />
+    <!-- Estilo aplicado al enlace "BACK" -->
+    <a type="button" href="/ccform" class="button">BACK</a>
+</div>
 
 
     <%- include("../partials/footer.ejs") %>
