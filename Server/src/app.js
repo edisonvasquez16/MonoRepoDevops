@@ -27,7 +27,9 @@ app.use((req, res) => {
 const environment = process.env.environment || 'dev'; 
 const port = config[environment]
 
+
 const pathdb = process.env.MONGO_BASE + environment + ":" + port + process.env.MONGO_NAME
+
 console.log('Connect to MongoDB for path:', pathdb)
 mongoose
 .connect(pathdb, { useNewUrlParser: true, useUnifiedTopology: true })
