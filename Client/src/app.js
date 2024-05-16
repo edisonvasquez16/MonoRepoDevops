@@ -17,6 +17,10 @@ app.get("/index", (req, res) => {
     res.render('home', {title: 'HOME'})
 });
 
+app.get("/", (req, res) => {
+    res.render('home', {title: 'HOME'})
+});
+
 app.use(express.json())
 app.use('/', maskRoutes)
 
