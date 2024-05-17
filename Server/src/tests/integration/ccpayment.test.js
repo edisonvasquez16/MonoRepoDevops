@@ -2,11 +2,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const request = require("supertest");
 const app = require("../../app-debug");
-const config = require('../../config/ports')
+const config = require('../../config/dbports')
 
 const environment = 'dev'; 
 const port = config[environment]
-const pathdb = process.env.HOST + ":" + port + process.env.MONGO_NAME
+const pathdb = process.env.MONGO_UNIT + ":" + port + process.env.MONGO_NAME
 console.log('Connect to BD: ', pathdb)
 beforeEach(async () => {
     await mongoose
@@ -81,7 +81,7 @@ describe("GET a credit card payment", () => {
 
     it("should not get a credit card payment", async () => {
         const res2 = await request(app)
-            .get("/api/v1/credit-card-payment/65162a3d7d4fd87140e3b588")
+            .get("/api/v1/credit-card-payment/66453e93fff7372dc8e11333")
         expect(res2.statusCode).toBe(204)
         //expect(res2.body.message).toBe("Credit card payment not found")
     })
@@ -99,7 +99,7 @@ describe("PUT a credit card payment", () => {
 
     it("should not update a credit card payment", async () => {
         const res = await request(app)
-            .put("/api/v1/credit-card-payment/65162a3d7d4fd87140e3b513")
+            .put("/api/v1/credit-card-payment/66453e93fff7372dc8e11338")
             .send(ccPaymentToUpdate)
         expect(res.statusCode).toBe(204)
         //expect(res.body.message).toBe("Credit card payment not found")
@@ -107,7 +107,7 @@ describe("PUT a credit card payment", () => {
 
     it("should not update a credit card payment for object null", async () => {
         const res = await request(app)
-            .put("/api/v1/credit-card-payment/6511ed11d1dfd8f1c1d25598")
+            .put("/api/v1/credit-card-payment/66453e93fff7372dc8e11331")
             .send(null)
         expect(res.statusCode).toBe(400)
         expect(res.body.message).toBe("Body cannot be empty")
