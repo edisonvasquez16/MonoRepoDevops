@@ -2,12 +2,12 @@ const cashPaymentSchema = require('../models/cashPayment')
 
 const createCashPayment = (req, res) => {
     if (Object.keys(req.body).length === 0) {
-        res.status(400).json({
+        return res.status(400).json({
             status: 'Error',
             message: 'Body cannot be empty'
-        })
+        });
     } else {
-        const cashPayment = cashPaymentSchema(req.body)
+        const cashPayment = new cashPaymentSchema(req.body);
         cashPayment
             .save()
             .then(result => res.status(201).json(result))
@@ -20,30 +20,31 @@ const createCashPayment = (req, res) => {
                     return res.status(400).json({ errors: validationErrors });
                 }
                 console.error(error);
-            })
+                return res.status(500).json({ message: 'Internal Server Error' });
+            });
     }
-}
+};
 
 const getAllCashPayments = (req, res) => {
     cashPaymentSchema
-        .find()
-        .then(results => {
-            if (results.length) {
-                res.json({
-                    status: 'OK',
-                    message: 'Cash payments request',
-                    results
-                })
-            } else {
-                res.status(204).json({
-                    status: 'Error',
-                    message: 'Cash payments not found',
-                    items: results.length
-                })
-            }
-        })
-        .catch((error) => res.status(400).json({ message: error }))
-}
+      .find()
+      .then(results => {
+        if (results.length) {
+          res.json({
+            status: 'OK',
+            message: 'Cash payments request',
+            results
+          });
+        } else {
+          res.status(204).json({
+            status: 'Error',
+            message: 'Cash payments not found',
+            items: results.length
+          });
+        }
+      })
+      .catch((error) => res.status(400).json({ message: error }));
+  };
 
 const getACashPayment = (req, res) => {
     const { id } = req.params;

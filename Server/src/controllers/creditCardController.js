@@ -4,7 +4,8 @@ const createCreditcardPayment = (req, res) => {
     if (Object.keys(req.body).length === 0) {
         res.status(400).json({
             status: 'Error',
-            message: 'Body cannot be empty'
+            message: 'Body cannot be empty',
+            res
         })
     } else {
         const creditCardPayment = creditCardPaymentSchema(req.body)
@@ -20,6 +21,7 @@ const createCreditcardPayment = (req, res) => {
                     return res.status(400).json({ errors: validationErrors });
                 }
                 console.error(error);
+                return res.status(500).json({ message: 'Internal Server Error' });
             })
     }
 }
