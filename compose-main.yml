@@ -80,7 +80,6 @@ services:
 networks:
   pro-network:
     name: pro-network
-    external: true
     driver: bridge
 
 volumes:
