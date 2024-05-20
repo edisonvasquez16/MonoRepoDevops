@@ -11,6 +11,7 @@ describe('PAYMENTS METHODS TESTS', () =>  {
         homePage
             .visit()
             .validatePage()
+            .goToPlatform()
         cy.fixture('cashFormData')
             .then(cashData => {
                 cashDataFull = cashData;

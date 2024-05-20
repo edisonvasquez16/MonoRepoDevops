@@ -7,7 +7,9 @@
     "cypress": "cypress open",
     "report:merge": "mochawesome-merge cypress/results/*.json > index.json",
     "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
-    "cypress:test": "cypress run --spec cypress/e2e/*.cy.js"
+    "cypress:testdev": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js --spec cypress/e2e/ccForm.cy.js",
+    "cypress:testst": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js",
+    "cypress:testpro": "cypress run --spec cypress/e2e/cashForm.cy.js"
   },
   "repository": {
     "type": "git",

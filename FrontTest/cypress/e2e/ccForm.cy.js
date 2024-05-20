@@ -12,6 +12,7 @@ describe('PAYMENTS METHODS TESTS', () => {
         homePage
             .visit()
             .validatePage()
+            .goToPlatform()
         cy.fixture('CCFormData')
             .then(ccData => {
                 ccDataFull = ccData;
