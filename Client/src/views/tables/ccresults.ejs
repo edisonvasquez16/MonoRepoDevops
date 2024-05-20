@@ -4,58 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credit Card Payments</title>
-    <!-- Enlaza tus estilos CSS externos aquí -->
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f3f3;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .details-content {
-            padding: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .button {
-            background-color: #55c57a;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #3da25e;
-        }
-    </style>
 </head>
 <body>
     <div class="details-content">
@@ -77,7 +25,7 @@
                             <td><%= ccPayment.cccellphone %></td>
                             <td>
                                 <form action="/details/ccdetail/<%= ccPayment._id %>">
-                                    <input class="button" type="submit" value="Print" />
+                                    <input class="button" type="submit" value="Details" />
                                 </form>
                             </td>
                         </tr>

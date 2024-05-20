@@ -1,3 +1,18 @@
+body {
+  color: #333;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  
+}
+
 nav {
   background-color: #333;
   color: #fff;
@@ -23,6 +38,10 @@ nav {
   font-size: 14px;
 }
 
+.site-options {
+  text-align: center;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -43,14 +62,152 @@ ul li a:hover {
   text-decoration: underline;
 }
 
+nav ul li a {
+  text-decoration: none;
+  color: #ffffff; 
+}
+
+nav ul li a:hover {
+  color: #000000; 
+  text-decoration: none;
+}
+
 footer {
   background-color: #333;
   color: #fff;
   padding: 10px;
   text-align: center;
+  margin-top: 3%;
 }
 
 footer p {
   margin: 0;
   font-size: 14px;
+}
+
+.details-content {
+  background-color: #fff;
+  margin-bottom: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3, h4 {
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 4px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input,
+select,
+textarea {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #64666b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: rgb(60, 61, 65);
+}
+
+.accordion {
+  background-color: #60626b;
+  color: #fff;
+  cursor: zoom-in;
+  padding: 11px;
+  margin-top: 0;
+  width: 65%;
+  text-align: center;
+  border: none;
+  outline: none;
+  transition: 0.5s;
+  font-size: 13pt;
+}
+
+.accordion:hover {
+  background-color: rgb(60, 61, 65);
+}
+
+.panel {
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  width: 65%;
+  margin: auto;
+}
+
+.panel p {
+  color: #555;
+}
+
+.content {
+  background-color: #fff; 
+  padding: 1px; 
+  margin: 1px auto;
+  width: 65%;
+}
+
+h3 {
+  font-size: 25pt;
+}
+
+p {
+  font-size: larger;
+}
+
+.container {
+  text-align: left;
+}
+
+.selected {
+  text-shadow: 0 0 10px rgb(255, 255, 255);
+  color: #000000;
+  text-decoration:double;
 }

@@ -69,6 +69,20 @@
           caret_pos = updated_len - original_len + caret_pos;
           input[0].setSelectionRange(caret_pos, caret_pos);
         }
+
+        $(document).ready(function() {
+            var selectedOption = localStorage.getItem('selectedOption');
+            if (selectedOption) {
+                $('#' + selectedOption).addClass('selected');
+            }
+
+            $('ul li a').click(function() {
+                $('ul li a').removeClass('selected');
+                $(this).addClass('selected');
+              var id = $(this).attr('id');
+                localStorage.setItem('selectedOption', id);
+            });
+        });
 </script>
 <footer>
     Copyright &copy; Edison Vasquez 2024
