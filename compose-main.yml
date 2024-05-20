@@ -1,5 +1,4 @@
 version: '3.7'
-
 services:
   app:
     container_name: clientpro
@@ -9,23 +8,41 @@ services:
     environment:
       - BRANCH=main
       - ENVIRONMENT=pro
+      - HOST=http://localhost
+      - HOST_SERVER=http://nginxpro
+      - PORT_SERVER=4000
     ports:
       - '4040:4040'
     expose:
       - '4040'
     networks:
       - pro-network
+    links:
+      - nginx
 
-  webapi:
-    container_name: serverpro
+  webapi1:
+    container_name: serverpro1
     image: servermain
     restart: always
     build: .
     environment:
       - BRANCH=main
       - ENVIRONMENT=pro
-    ports:
-      - '4000:4000'
+    expose:
+      - '4000'
+    networks:
+      - pro-network
+    links:
+      - mongopro
+
+  webapi2:
+    container_name: serverpro2
+    image: servermain
+    restart: always
+    build: .
+    environment:
+      - BRANCH=main
+      - ENVIRONMENT=pro
     expose:
       - '4000'
     networks:
@@ -45,9 +62,25 @@ services:
     networks:
       - pro-network
 
+  nginx:
+    image: nginx:latest
+    container_name: nginxpro
+    ports:
+      - '4000:4000'
+    expose:
+      - '4000'
+    volumes:
+      - ./nginx/nginx-pro.conf:/etc/nginx/nginx.conf
+    networks:
+      - pro-network
+    links:
+      - webapi1
+      - webapi2
+
 networks:
   pro-network:
     name: pro-network
+    external: true
     driver: bridge
 
 volumes:

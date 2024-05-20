@@ -8,23 +8,41 @@ services:
     environment:
       - BRANCH=staging
       - ENVIRONMENT=st
+      - HOST=http://localhost
+      - HOST_SERVER=http://nginxst
+      - PORT_SERVER=3000
     ports: 
     - '3030:3030'
     expose:
       - '3030'
     networks:
       - st-network
+    links:
+      - nginx
 
-  webapi: 
-    container_name: serverst
+  webapi1: 
+    container_name: serverst1
     image: serverstaging
     restart: always 
     build: .
     environment:
       - BRANCH=staging
       - ENVIRONMENT=st
-    ports: 
-      - '3000:3000'
+    expose:
+      - '3000'
+    networks:
+      - st-network  
+    links:
+      - mongost
+    
+  webapi2: 
+    container_name: serverst2
+    image: serverstaging
+    restart: always 
+    build: .
+    environment:
+      - BRANCH=staging
+      - ENVIRONMENT=st
     expose:
       - '3000'
     networks:
@@ -43,6 +61,21 @@ services:
       - '27017'
     networks:
       - st-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginxst
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+    volumes:
+      - ./nginx/nginx-st.conf:/etc/nginx/nginx.conf
+    networks:
+      - st-network
+    links:
+      - webapi1
+      - webapi2
 
 networks:
   st-network:
