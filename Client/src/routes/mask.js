@@ -1,66 +1,76 @@
-const creditCardPaymentSchema = require('../models/creditCardPayment')
-const cashPaymentSchema = require('../models/cashPayment')
-const psePaymentSchema = require('../models/psePayment')
-const express = require('express')
-const router = express.Router()
+const express = require('express');
 const axios = require('axios');
-const config = require('../config/server-ports')
+const creditCardPaymentSchema = require('../models/creditCardPayment');
+const cashPaymentSchema = require('../models/cashPayment');
+const psePaymentSchema = require('../models/psePayment');
 
-const environment = process.env.environment || 'dev'; 
-const path = process.env.HOST_SERVER + environment + ":" + config[environment]
+const router = express.Router();
 
-//GET ALL ITEMS TO LIST
-router.get("/cashform", async (req, res) => {
-    const response = await axios.get(path + '/api/v1/cash-payments')
-    res.render('forms/cashform', {title: 'CASH', cashPayments: response.data})
+const path = `${process.env.HOST_SERVER}:${process.env.PORT_SERVER}`;
+
+const fetchPaymentDetails = (paymentType, schema) => async (req, res, next) => {
+    try {
+        const response = await axios.get(`${path}/api/v1/${paymentType}-payments`);
+        req.paymentData = response.data;
+        req.paymentType = paymentType.toUpperCase();
+        req.schema = schema;
+        next();
+    } catch (error) {
+        console.error(`Error fetching ${paymentType} payments:`, error);
+        res.status(500).send('Error fetching payment data');
+    }
+};
+
+const fetchPaymentDetail = (paymentType) => async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const response = await axios.get(`${path}/api/v1/${paymentType}-payment/${id}`);
+        req.paymentDetail = response.data.result;
+        req.paymentType = paymentType.toUpperCase();
+        next();
+    } catch (error) {
+        console.error(`Error fetching ${paymentType} payment detail:`, error);
+        res.status(500).send('Error fetching payment detail');
+    }
+};
+
+router.get("/cashform", fetchPaymentDetails('cash', cashPaymentSchema), (req, res) => {
+    res.render('forms/cashform', { title: 'CASH', cashPayments: req.paymentData });
 });
 
-router.get("/pseform", async (req, res) => {
-    const response = await axios.get(path + '/api/v1/pse-payments')
-    res.render('forms/pseform', {title: 'PSE', psePayments: response.data})
+router.get("/pseform", fetchPaymentDetails('pse', psePaymentSchema), (req, res) => {
+    res.render('forms/pseform', { title: 'PSE', psePayments: req.paymentData });
 });
 
-router.get("/ccform", async (req, res) => {
-    const response = await axios.get(path + '/api/v1/credit-card-payments')
-    res.render('forms/ccform', {title: 'CC', ccPayments: response.data})
+router.get("/ccform", fetchPaymentDetails('credit-card', creditCardPaymentSchema), (req, res) => {
+    res.render('forms/ccform', { title: 'CC', ccPayments: req.paymentData });
 });
 
-//CREATE PAYMENTS AND CONSULT DETAILS
-router.post("/cashform/create", async (req, res) => {
-    const cashPayment = cashPaymentSchema(req.body)
-    const responseCreate = await axios.post(path + '/api/v1/cash-payment/', cashPayment)
-    res.render('details/cashdetail', {title: 'CASH', cashPayment: responseCreate.data})
+const createPayment = (paymentType, schema) => async (req, res) => {
+    try {
+        const payment = new schema(req.body);
+        const response = await axios.post(`${path}/api/v1/${paymentType}-payment/`, payment);
+        res.render(`details/${paymentType}detail`, { title: req.paymentType, [`${paymentType}Payment`]: response.data });
+    } catch (error) {
+        console.error(`Error creating ${paymentType} payment:`, error);
+        res.status(500).send('Error creating payment');
+    }
+};
+
+router.post("/cashform/create", createPayment('cash', cashPaymentSchema));
+router.post("/pseform/create", createPayment('pse', psePaymentSchema));
+router.post("/ccform/create", createPayment('credit-card', creditCardPaymentSchema));
+
+router.get("/details/cashdetail/:id", fetchPaymentDetail('cash'), (req, res) => {
+    res.render('details/cashdetail', { title: 'CASH', cashPayment: req.paymentDetail });
 });
 
-router.post("/pseform/create", async (req, res) => {
-    const psePayment = psePaymentSchema(req.body)
-    const responseCreate = await axios.post(path + '/api/v1/pse-payment/', psePayment)
-    res.render('details/psedetail', {title: 'PSE', psePayment: responseCreate.data})
+router.get("/details/psedetail/:id", fetchPaymentDetail('pse'), (req, res) => {
+    res.render('details/psedetail', { title: 'PSE', psePayment: req.paymentDetail });
 });
 
-router.post("/ccform/create", async (req, res) => {
-    const ccPayment = creditCardPaymentSchema(req.body)
-    const responseCreate = await axios.post(path + '/api/v1/credit-card-payment/', ccPayment)
-    res.render('details/ccdetail', {title: 'CC', ccPayment: responseCreate.data})
-});
-
-//CONSULT DETAIL A PAYMENT
-router.get("/details/cashdetail/:id", async (req, res) => {
-    const { id } = req.params;
-    const response = await axios.get(path + '/api/v1/cash-payment/' + id)
-    res.render('details/cashdetail', {title: 'CASH', cashPayment: response.data.result})
-});
-
-router.get("/details/psedetail/:id", async (req, res) => {
-    const { id } = req.params;
-    const response = await axios.get(path + '/api/v1/pse-payment/' + id)
-    res.render('details/psedetail', {title: 'PSE', psePayment: response.data.result})
-});
-
-router.get("/details/ccdetail/:id", async (req, res) => {
-    const { id } = req.params;
-    const response = await axios.get(path + '/api/v1/credit-card-payment/' + id)
-    res.render('details/ccdetail', {title: 'CC', ccPayment: response.data.result})
+router.get("/details/ccdetail/:id", fetchPaymentDetail('credit-card'), (req, res) => {
+    res.render('details/ccdetail', { title: 'CC', ccPayment: req.paymentDetail });
 });
 
 module.exports = router;
