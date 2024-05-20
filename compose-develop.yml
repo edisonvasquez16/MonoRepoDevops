@@ -1,49 +1,77 @@
-version: '3.7' 
+version: '3.7'
 services:
-  app: 
+  app:
     container_name: clientdev
     image: clientdevelop
-    restart: always 
+    restart: always
     build: .
     environment:
       - BRANCH=develop
       - ENVIRONMENT=dev
-    ports: 
-    - '2020:2020'
-    expose:
-      - '2020'
+      - HOST=http://localhost
+      - HOST_SERVER=http://nginxdev
+      - PORT_SERVER=2000
+    ports:
+      - '2020:2020'
     networks:
       - dev-network
+    links:
+      - nginx
 
-  webapi: 
-    container_name: serverdev
+  webapi1:
+    container_name: serverdev1
     image: serverdevelop
-    restart: always 
+    restart: always
     build: .
     environment:
       - BRANCH=develop
       - ENVIRONMENT=dev
-    ports: 
-      - '2000:2000'
     expose:
-      - '2000'  
+      - '2000'
+    networks:
+      - dev-network
     links:
       - mongodev
+
+  webapi2:
+    container_name: serverdev2
+    image: serverdevelop
+    restart: always
+    build: .
+    environment:
+      - BRANCH=develop
+      - ENVIRONMENT=dev
+    expose:
+      - '2000'
     networks:
       - dev-network
-    
+    links:
+      - mongodev
+      
   mongodev:
-    container_name: mongodev 
+    container_name: mongodev
     image: mongo:7.0.10-rc0-jammy
-    volumes: 
+    volumes:
       - mongodb:/data/db
     ports:
       - '27017:27017'
-    expose:
-      - '27017' 
     networks:
       - dev-network
-        
+
+  nginx:
+    image: nginx:latest
+    container_name: nginxdev
+    ports:
+      - '2000:2000'
+    expose:
+      - '2000'
+    volumes:
+      - ./nginx/nginx-dev.conf:/etc/nginx/nginx.conf
+    networks:
+      - dev-network
+    links:
+      - webapi1
+      - webapi2
 
 networks:
   dev-network:
