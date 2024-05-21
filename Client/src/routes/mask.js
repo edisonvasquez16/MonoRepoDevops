@@ -50,6 +50,8 @@ const createPayment = (paymentType, schema) => async (req, res) => {
     try {
         const payment = new schema(req.body);
         const response = await axios.post(`${path}/api/v1/${paymentType}-payment/`, payment);
+        if (paymentType === 'credit-card')
+            paymentType = 'cc'
         res.render(`details/${paymentType}detail`, { title: req.paymentType, [`${paymentType}Payment`]: response.data });
     } catch (error) {
         console.error(`Error creating ${paymentType} payment:`, error);
