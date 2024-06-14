@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:2222']
+
+  - job_name: 'webapi1'
+    static_configs:
+      - targets: ['webapi1:2000']
+
+  - job_name: 'webapi2'
+    static_configs:
+      - targets: ['webapi2:2000']
+
+  - job_name: 'mongopro'
+    static_configs:
+      - targets: ['mongopro:27017']
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginxpro:2000']

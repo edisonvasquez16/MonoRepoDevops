@@ -12,13 +12,18 @@ services:
       - HOST_SERVER=http://nginxst
       - PORT_SERVER=3000
     ports: 
-    - '3030:3030'
+      - '3030:3030'
     expose:
       - '3030'
     networks:
       - st-network
     links:
       - nginx
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3030"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   webapi1: 
     container_name: serverst1
@@ -34,6 +39,11 @@ services:
       - st-network  
     links:
       - mongost
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
   webapi2: 
     container_name: serverst2
@@ -49,6 +59,11 @@ services:
       - st-network  
     links:
       - mongost
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
   mongost:
     container_name: mongost
@@ -61,6 +76,11 @@ services:
       - '27017'
     networks:
       - st-network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   nginx:
     image: nginx:latest
@@ -76,6 +96,43 @@ services:
     links:
       - webapi1
       - webapi2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheusst
+    volumes:
+      - ./nginx/prometheus-st.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '3333:9090'
+    networks:
+      - st-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - '3330:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=edinson1
+    volumes:
+      - grafana:/var/lib/grafana
+    networks:
+      - st-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   st-network:
@@ -84,3 +141,4 @@ networks:
 
 volumes:
   mongodb:
+  grafana:

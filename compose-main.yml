@@ -19,6 +19,11 @@ services:
       - pro-network
     links:
       - nginx
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4040"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   webapi1:
     container_name: serverpro1
@@ -34,6 +39,11 @@ services:
       - pro-network
     links:
       - mongopro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   webapi2:
     container_name: serverpro2
@@ -49,6 +59,11 @@ services:
       - pro-network
     links:
       - mongopro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   mongopro:
     container_name: mongopro
@@ -61,6 +76,11 @@ services:
       - '27017'
     networks:
       - pro-network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   nginx:
     image: nginx:latest
@@ -76,6 +96,43 @@ services:
     links:
       - webapi1
       - webapi2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheuspro
+    volumes:
+      - ./nginx/prometheus-pro.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '4444:9090'
+    networks:
+      - pro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - '4440:3000'
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=edinson1
+    volumes:
+      - grafana:/var/lib/grafana
+    networks:
+      - pro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   pro-network:
@@ -84,3 +141,4 @@ networks:
 
 volumes:
   mongodb:
+  grafana:
