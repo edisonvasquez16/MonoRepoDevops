@@ -7,9 +7,9 @@
     "cypress": "cypress open",
     "report:merge": "mochawesome-merge cypress/results/*.json > index.json",
     "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
-    "cypress:testdev": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js --spec cypress/e2e/ccForm.cy.js",
-    "cypress:testst": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js",
-    "cypress:testpro": "cypress run --spec cypress/e2e/cashForm.cy.js"
+    "cypress:testdevelop": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js --spec cypress/e2e/ccForm.cy.js",
+    "cypress:teststaging": "cypress run --spec cypress/e2e/cashForm.cy.js --spec cypress/e2e/pseForm.cy.js",
+    "cypress:testmain": "cypress run --spec cypress/e2e/cashForm.cy.js"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
     "@cypress/xpath": "^2.0.3",
     "@types/node": "^20.7.1",
     "cross-env": "^7.0.3",
-    "cypress": "^13.3.0",
+    "cypress": "^13.11.0",
     "cypress-grep": "^2.5.3",
     "cypress-mochawesome-reporter": "^2.4.0",
     "cypress-multi-reporters": "^1.6.3",
