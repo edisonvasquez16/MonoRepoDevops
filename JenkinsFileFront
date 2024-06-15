@@ -1,0 +1,73 @@
+pipeline {
+    agent any
+    parameters {
+        string(
+            name: 'Environment',
+            defaultValue: 'main',
+            description: 'Select the environment to deploy, options main, staging and develop'
+        )
+    }
+    
+    stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    env.PATH = "/usr/local/bin:${env.PATH}"
+                }
+            }
+        }
+        
+        stage('SCM') {
+            steps {
+                script {
+                    try {
+                        git branch: "develop",
+                        url: 'https://github.com/edisonvasquez16/MonoRepoDevops.git'
+                    } catch (Exception e) {
+                        echo "Error: Failed to clone repository"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
+            }
+        }
+        
+        stage('Execute Tests') {
+            steps {
+                script {
+                    try {
+                        sh "cd ./FrontTest && npm install"
+                        sh "cd ./FrontTest && npm run cypress:test${params.Environment}"
+                    } catch (Exception e) {
+                        echo "Error: Front test Failure"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                try {
+                    sh "cd ./FrontTest && npm run report:merge"
+                    sh "cd ./FrontTest && npm run report:generate"
+                } catch (Exception e) {
+                    echo "Error: Report generate Failure"
+                    currentBuild.result = 'FAILURE'
+                    error(e.toString())
+                }
+                publishHTML(target: [
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: './FrontTest/public',
+                    reportFiles: 'index.html',
+                    reportName: 'Cypress Test Report'
+                ])
+            }
+             
+        }
+    }
+}

@@ -1,38 +1,254 @@
 pipeline {
     agent any
     parameters {
-        choice(name: "Environment", choices: ["main", "staging", "develop"], description: "Environment to deploy")
+        choice(
+            name: 'Environment',
+            choices: ['main', 'staging', 'develop'],
+            description: 'Select the environment to deploy the application'
+        )
     }
+    
     stages {
+        // Stage for initializing environment
         stage('Initialize') {
             steps {
                 script {
-                    def dockerHome = tool 'DockerJenkins'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    // Set up environment variables
+                    env.PATH = "/usr/local/bin:${env.PATH}"
+                    env.ENVIRONMENT_NAME =""
+                    // Determine environment name based on parameter
+                    if (params.Environment == 'main') {
+                        env.ENVIRONMENT_NAME = 'production'
+                    } else {
+                        env.ENVIRONMENT_NAME = params.Environment
+                    }
+                    try {
+                        // Stop Docker containers using port 27017
+                        sh '''docker stop $(docker ps -q --filter 'publish=27017')'''
+                    } catch (Exception e) {
+                        // Handle if port 27017 is not in use
+                        echo "Port 27017 is not in use."
+                        currentBuild.result = 'SUCCESS'
+                    }
                 }
             }
         }
+        
+        // Stage for source code management
         stage('SCM') {
             steps {
-                //git branch: "${params.Environment}",
-                git branch: "add-docker-compose-build",
-                url: "https://github.com/edisonvasquez16/MonoRepoDevops.git",
-                credentialsId: "d96b6461-c1d5-437a-a278-42b00acd3dce"
+                script {
+                    try {
+                        // Checkout source code from Git based on environment
+                        git branch: "${params.Environment}",
+                        url: 'https://github.com/edisonvasquez16/MonoRepoDevops.git'
+                    } catch (Exception e) {
+                        // Handle failed repository clone
+                        echo "Error: Failed to clone repository"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
             }
         }
-        stage("Build BackEnd image") {
+        
+        // Stage for building unit test for backend
+        stage('Execute Unit tests') {
             steps {
-                sh "cd Server && docker build -t server${params.Environment} ."
+                script { 
+                    try {
+                        nodejs(nodeJSInstallationName: 'NodeJS') {
+                            sh "cd ./Server && npm install"
+                            sh "cd ./Server && npm run test"
+                        }
+                    } catch (Exception e) {
+                        echo "Error: Unit test Failure"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
             }
         }
-        stage("Build FrontEnd image") {
+        
+        // Stage for execute analysis of sonar qube
+        stage('Send request SonarQube') {
             steps {
-                sh "cd Client && docker build -t client${params.Environment} ."
+                script {
+                    def childBuild2 = build job: 'Scanner Sonar', 
+                                        wait: false
+                }
             }
         }
-        stage("Run application") {
+        
+        // Stage for building backend Docker image
+        stage('Build BackEnd') {
             steps {
-                sh "docker-compose -f compose-${params.Environment}.yml up"
+                script {
+                    def imageName = "server${params.Environment}:latest"
+                    // Check if Docker image already exists
+                    def imageExists = sh(script: "docker image inspect $imageName > /dev/null 2>&1 && echo 'true' || echo 'false'", returnStatus: true) == 0
+                    if (!imageExists) {
+                        // Build Docker image if it doesn't exist
+                        try {
+                            sh "docker build -t $imageName ./Server"
+                        } catch (Exception e) {
+                            // Handle failed image build
+                            echo "Error: Failed to build BackEnd Docker image"
+                            currentBuild.result = 'FAILURE'
+                            error(e.toString())
+                        }
+                    } else {
+                        // Rebuild existing Docker image
+                        echo "Backend Docker image already exists. Removing and rebuilding."
+                        sh "docker rmi -f $imageName"
+                        sh "docker build -t $imageName ./Server"
+                    }
+                }
+            }
+        }
+
+        // Stage for building frontend Docker image
+        stage('Build FrontEnd') {
+            steps {
+                script {
+                    def imageName = "client${params.Environment}:latest"
+                    // Check if Docker image already exists
+                    def imageExists = sh(script: "docker image inspect $imageName > /dev/null 2>&1 && echo 'true' || echo 'false'", returnStatus: true) == 0
+                    if (!imageExists) {
+                        // Build Docker image if it doesn't exist
+                        try {
+                            sh "docker build -t $imageName ./Client"
+                        } catch (Exception e) {
+                            // Handle failed image build
+                            echo "Error: Failed to build FrontEnd Docker image"
+                            currentBuild.result = 'FAILURE'
+                            error(e.toString())
+                        }
+                    } else {
+                        // Rebuild existing Docker image
+                        echo "Frontend Docker image already exists. Removing and rebuilding."
+                        sh "docker rmi -f $imageName"
+                        sh "docker build -t $imageName ./Client"
+                    }
+                }
+            }
+        }
+
+        // Stage for deploying application with Docker Compose
+        stage('Deploy environment') {
+            steps {
+                script {
+                    def composeFile = "compose-${params.Environment}.yml"
+                    // Check if Docker containers are already running
+                    def containersRunning = sh(script: "docker-compose -f $composeFile ps -q", returnStatus: true) == 0
+        
+                    if (!containersRunning) {
+                        // Deploy if containers are not running
+                        try {
+                            sh "docker-compose -f $composeFile --project-name ${env.ENVIRONMENT_NAME} up --detach --force-recreate"
+                        } catch (Exception e) {
+                            // Handle deployment failure
+                            echo "Error: Failed to deploy with Docker Compose"
+                            currentBuild.result = 'FAILURE'
+                            error(e.toString())
+                        }
+                    } else {
+                        // Redeploy by stopping and removing existing containers
+                        echo "Stopping and removing existing containers before redeploying."
+                        sh "docker-compose -f $composeFile down"
+                        sh "docker-compose -f $composeFile --project-name ${env.ENVIRONMENT_NAME} up --detach --force-recreate"
+                    }
+                    
+                    sh 'sleep 5'
+                }
+            }
+        }
+        
+        stage('Health Check') {
+            steps {
+                script {
+                    def containers
+                    switch (env.ENVIRONMENT_NAME) {
+                        case 'develop':
+                            containers = ['clientdev', 'serverdev1', 'serverdev2', 'mongodev', 'nginxdev', 'prometheusdev', 'grafana']
+                            break
+                        case 'staging':
+                            containers = ['clientst', 'serverst1', 'serverst2', 'mongost', 'nginxst']
+                            break
+                        case 'production':
+                            containers = ['clientpro', 'serverpro1', 'serverpro2', 'mongopro', 'nginxpro']
+                            break
+                        default:
+                            error "Unknown environment: ${env.ENVIRONMENT} for containers validation"
+                    }
+                    containers.each { containerName ->
+                        def isRunning = sh(script: "docker ps --filter 'name=${containerName}' --filter 'status=running' | grep ${containerName} > /dev/null 2>&1 && echo 'true' || echo 'false'", returnStdout: true).trim()
+                        if (isRunning != 'true') {
+                            error "Container ${containerName} is not running"
+                        } else {
+                            echo "Container ${containerName} is running"
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Send request BackTest') {
+            steps {
+                script {
+                    def childBuild2 = build job: 'Back Test', 
+                                        parameters: [
+                                            string(name: 'Environment', value: "${params.Environment}")
+                                        ], 
+                                        wait: false
+                }
+            }
+        }
+        
+        stage('Send request FrontTest') {
+            steps {
+                script {
+                    def childBuild1 = build job: 'Front Test', 
+                                        parameters: [
+                                            string(name: 'Environment', value: "${params.Environment}")
+                                        ], 
+                                        wait: false
+                }
+            }
+        }
+        
+    }
+    
+    // Post-build actions
+    post {
+        always {
+            script {
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: './Server',
+                    reportFiles: 'test-report.html',
+                    reportName: 'Unit test report'
+                ])
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: './Server/coverage',
+                    reportFiles: 'index.html',
+                    reportName: 'Coverage report'
+                ])
+                try {
+                    // Clean up Docker images
+                    //sh "docker rmi -f server${params.Environment}:latest"
+                    //sh "docker rmi -f client${params.Environment}:latest"
+                    env.PATH = "${env.PATH}".replace("/usr/local/bin:", "")
+                } catch (Exception e) {
+                    // Handle cleanup failure
+                    echo "Error: Failed to clean up Docker images"
+                    error(e.toString())
+                }
             }
         }
     }
