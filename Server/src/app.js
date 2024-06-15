@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const client = require('prom-client')
 const router = express.Router()
 const app = express();
 const mongoose = require('mongoose')
@@ -15,10 +16,35 @@ const environment = process.env.environment || 'dev';
 const port = config[environment]
 const portdb = configdb[environment]
 const pathdb = process.env.MONGO_BASE + environment + ":" + portdb + process.env.MONGO_NAME
+const prometheus = require('prom-client');
+
+const register = new prometheus.Registry();
+prometheus.collectDefaultMetrics({ register });
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
+
+const httpRequestCounter = new prometheus.Counter({
+    name: 'http_requests_total',
+    help: 'Total number of HTTP requests',
+    labelNames: ['method', 'status_code'],
+    registers: [register],
+});
+
+app.use((req, res, next) => {
+    httpRequestCounter.labels(req.method, res.statusCode).inc();
+    next();
+});
+
+app.get('/metrics', async (req, res) => {
+    try {
+        res.set('Content-Type', register.contentType);
+        res.end(await register.metrics());
+    } catch (ex) {
+        res.status(500).end(ex.message);
+    }
+});
 
 app.use(express.json())
 app.use('/api', cashRoutes)
