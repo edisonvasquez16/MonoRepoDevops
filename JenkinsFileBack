@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+    parameters {
+        string(
+            name: 'Environment',
+            defaultValue: 'main',
+            description: 'Select the environment to deploy, options main, staging and develop'
+        )
+    }
+    
+    stages {
+        stage('Initialize') {
+            steps {
+                script {
+                    env.PATH = "/Library/Java/JavaVirtualMachines/jdk-11.0.17.jdk/Contents/Home/bin/:${env.PATH}"
+                }
+            }
+        }
+        
+        stage('SCM') {
+            steps {
+                script {
+                    try {
+                        git branch: "main",
+                        url: 'https://github.com/edisonvasquez16/AutomationTestProject.git'
+                    } catch (Exception e) {
+                        echo "Error: Failed to clone repository"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
+            }
+        }
+        
+        stage('Execute Back tests') {
+            steps {
+                script {
+                    try {
+                        sh "./gradlew clean ${params.Environment} -Denvironment=${params.Environment} -w"
+                        sh "./gradlew aggregate -w"
+                    } catch (Exception e) {
+                        echo "Error: Serenity test Failure"
+                        currentBuild.result = 'FAILURE'
+                        error(e.toString())
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: './target/site/serenity',
+                    reportFiles: 'index.html',
+                    reportName: 'Serenity Test Report'
+                ])
+            }
+             
+        }
+    }
+}
